@@ -14,10 +14,12 @@
   },
   "scripts": {
     "dev": "webpack-dev-server",
-    "build": "webpack"
+    "build": "webpack",
+    "server": "restify"
   },
   "dependencies": {
     "react": "^16.1.1",
-    "react-dom": "^16.1.1"
+    "react-dom": "^16.1.1",
+    "restify": "^6.3.3"
   }
 }
