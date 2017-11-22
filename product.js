@@ -1,11 +1,19 @@
-function ProductController(){
-    var that = this;
-    that.store = [];
+var errors = require('restify-errors');
 
-    var findProductById = function(req){
-        var found = that.store.filter(function(p){
-            return p.Id === parseInt(req.params.id);
-        })
+class ProductController{
+    constructor(){
+        this.store = [];
+
+        this.findProductById = this.findProductById.bind(this);
+        this.post = this.post.bind(this);
+        this.del = this.del.bind(this);
+        this.get = this.get.bind(this);
+    }
+
+    findProductById(req){
+        const found = this.store.filter(
+            p => p.Id === parseInt(req.params.id)
+        )
 
         if (found && found.length > 0) {
             return found[0];
@@ -14,14 +22,14 @@ function ProductController(){
         return null;
     }
 
-    that.get = function(req, res, next){
-        res.send(200, that.store);
+    get(req, res, next){
+        res.send(200, this.store);
         return next();
     }
 
-    that.getById = function(req, res, next){
-        var found = findProductById(req);
-
+    getById(req, res, next){
+        const found = findProductById(req);
+        
         if (found) {
             res.send(200, found);
         }
@@ -32,12 +40,12 @@ function ProductController(){
         return next();
     }
 
-    that.post = function(req, res, next){
+    post(req, res, next){
         if (!req.body.hasOwnProperty('id') || !req.body.hasOwnProperty('name')) {
             res.send(500);
         }
         else{
-            that.store.push({
+            this.store.push({
                 id: parseInt(req.body.id),
                 name: req.body.name
             });
@@ -48,12 +56,17 @@ function ProductController(){
         return next();
     }
 
-    that.put = function(req, res, next){
-        if (req.body.hasOwnProperty('name')) {
-            res.send(500);
+    put(req, res, next){
+        if (req.body === undefined) {
+            return next(new errors.InvalidContentError('There is no body'));
         }
 
-        var found = findProductById(req);
+        if (!req.body.hasOwnProperty('name')) {
+            return next(new errors.BadRequestError('Name was not provided'));
+        }
+
+        const found = findProductById(req);
+        
         if (found) {
             found.name = req.body.name;
             res.send(200, found);
@@ -65,8 +78,8 @@ function ProductController(){
         return next();
     }
 
-    that.del = function(req, res, next){
-        that.store = that.store.filter(function (p) {
+    del(req, res, next){
+        this.store = this.store.filter(function (p) {
             return p.id !== parseInt(req.params.id);
         });
         res.send(200);

@@ -93,7 +93,6 @@ class ProductTable extends React.Component{
                 (!this.props.stocked || product.stocked === this.props.stocked)
       }
     );
-    console.log(filteredProduct);
 
     filteredProduct.map(
       (product) => {
