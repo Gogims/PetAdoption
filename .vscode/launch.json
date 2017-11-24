@@ -10,14 +10,6 @@
         }
     ],
     "configurations": [
-
-        {
-            "type": "chrome",
-            "request": "attach",
-            "name": "Attach to Chrome",
-            "port": 9222,
-            "webRoot": "${workspaceRoot}"
-        },
         {
             "type": "chrome",
             "request": "launch",
@@ -29,7 +21,19 @@
             "type": "node",
             "request": "launch",
             "name": "Web API",
-            "program": "${workspaceRoot}/server.js"
-        }        
+            "program": "${workspaceRoot}/src/server/server.js",
+            "env": {
+                "NODE_ENV": "development"
+            }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Sequelize",
+            "program": "${workspaceRoot}/src/server/models/db.js",
+            "env": {
+                "NODE_ENV": "development"
+            }
+        }
     ]
 }

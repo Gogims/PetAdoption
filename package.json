@@ -15,12 +15,15 @@
   "scripts": {
     "dev": "webpack-dev-server",
     "build": "webpack",
-    "server": "restify"
+    "migrate": "node .\\src\\server\\migrations\\migrate.js"
   },
   "dependencies": {
+    "axios": "^0.17.1",
+    "mysql2": "^1.5.1",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
     "restify": "^6.3.3",
-    "restify-errors": "^5.0.0"
+    "restify-errors": "^5.0.0",
+    "sequelize": "^4.22.12"
   }
 }
