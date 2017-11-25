@@ -8,11 +8,12 @@ class ProductController{
         this.post = this.post.bind(this);
         this.del = this.del.bind(this);
         this.get = this.get.bind(this);
+        this.getById = this.getById.bind(this);
     }
 
     findProductById(req){
         const found = this.store.filter(
-            p => p.Id === parseInt(req.params.id)
+            p => p.id === parseInt(req.params.id)
         )
 
         if (found && found.length > 0) {
@@ -28,7 +29,7 @@ class ProductController{
     }
 
     getById(req, res, next){
-        const found = findProductById(req);
+        const found = this.findProductById(req);
         
         if (found) {
             res.send(200, found);

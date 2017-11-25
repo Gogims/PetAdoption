@@ -23,6 +23,7 @@
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
     "restify": "^6.3.3",
+    "restify-cors-middleware": "^1.0.1",
     "restify-errors": "^5.0.0",
     "sequelize": "^4.22.12"
   }

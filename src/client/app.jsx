@@ -1,18 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import '../css/index.css';
+import axios from 'axios'
 //  import keenImage from '../assets/keen.png';
-
-function getProducts(){
-  return [
-    {category: "Sporting Goods", price: "$49.99", stocked: true, name: "Football"},
-    {category: "Sporting Goods", price: "$9.99", stocked: true, name: "Baseball"},
-    {category: "Sporting Goods", price: "$29.99", stocked: false, name: "Basketball"},
-    {category: "Electronics", price: "$99.99", stocked: true, name: "iPod Touch"},
-    {category: "Electronics", price: "$399.99", stocked: false, name: "iPhone 5"},
-    {category: "Electronics", price: "$199.99", stocked: true, name: "Nexus 7"}
-  ];
-}
 
 class FilterableProductTable extends React.Component{
   constructor(props){
@@ -20,11 +10,36 @@ class FilterableProductTable extends React.Component{
 
     this.state={
       filteredText: '',
-      isStocked: false
+      isStocked: false,
+      products: []
     };
 
     this.handleFilterTextbox=this.handleFilterTextbox.bind(this);
     this.handleStockedCheckbox=this.handleStockedCheckbox.bind(this);
+    this.getProducts=this.getProducts.bind(this);
+  }
+
+  getProducts(){
+  
+    axios.get('http://localhost:3000/api/products/').then(response => {
+      this.setState({
+        products: [
+          {category: "Sporting Goods", price: "$49.99", stocked: true, name: "Football"},
+          {category: "Sporting Goods", price: "$9.99", stocked: true, name: "Baseball"},
+          {category: "Sporting Goods", price: "$29.99", stocked: false, name: "Basketball"},
+          {category: "Electronics", price: "$99.99", stocked: true, name: "iPod Touch"},
+          {category: "Electronics", price: "$399.99", stocked: false, name: "iPhone 5"},
+          {category: "Electronics", price: "$199.99", stocked: true, name: "Nexus 7"}
+        ]
+      });
+
+    }).catch(function (error) {
+      console.log(error);
+    });;
+  }
+
+  componentDidMount(){
+    this.getProducts();
   }
 
   handleFilterTextbox(text){
@@ -45,7 +60,7 @@ class FilterableProductTable extends React.Component{
         <FilterTable filter={this.state.filteredText} stocked={this.state.isStocked}  
         onFilterTextbox={this.handleFilterTextbox} onStockedCheckbox={this.handleStockedCheckbox} />
         <br/>
-        <ProductTable products={this.props.products} filter={this.state.filteredText} 
+        <ProductTable products={this.state.products} filter={this.state.filteredText} 
         stocked={this.state.isStocked}/>
       </div>
     );
@@ -162,6 +177,6 @@ class Article extends React.Component{
 }
 
 ReactDOM.render(
-  <FilterableProductTable products={getProducts()}/>,
+  <FilterableProductTable />,
   document.getElementById('root')
 );
