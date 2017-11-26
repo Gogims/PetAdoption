@@ -27,10 +27,10 @@
             }
         },
         {
-            "name": "Sequelize",
+            "name": "Migrate",
             "type": "node",
             "request": "launch",
-            "program": "${workspaceRoot}/src/server/models/db.js",
+            "program": "${workspaceRoot}/src/server/migrations/migrate.js",
             "env": {
                 "NODE_ENV": "development"
             }

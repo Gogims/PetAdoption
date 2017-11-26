@@ -1,4 +1,5 @@
-var errors = require('restify-errors');
+const errors = require('restify-errors');
+const user = require('../models/user');
 
 class ProductController{
     constructor(){
@@ -29,14 +30,17 @@ class ProductController{
     }
 
     getById(req, res, next){
-        const found = this.findProductById(req);
+        //const found = this.findProductById(req);
+        const found = user.findAll().then(users =>{
+            res.send(200, users); 
+        });
         
-        if (found) {
-            res.send(200, found);
-        }
-        else{
-            res.send(404, "product not found");
-        }
+        // if (found) {
+        //     res.send(200, found);
+        // }
+        // else{
+        //     res.send(404, "product not found");
+        // }
 
         return next();
     }
