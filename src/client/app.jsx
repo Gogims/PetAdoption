@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 //import injectTapEventPlugin from 'react-tap-event-plugin';
-import AnimalList from './animalList/list';
+import SimpleForm from './simpleForm/simpleForm';
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
@@ -9,7 +9,7 @@ import AnimalList from './animalList/list';
 
 function App(){
   return (
-    <AnimalList/>
+    <SimpleForm name="specie"/>
   );
 }
 

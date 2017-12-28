@@ -1,6 +1,6 @@
 const restify = require('restify');
 const corsMiddleware = require('restify-cors-middleware');
-const products = require('./controllers/product');
+const specie = require('./controllers/specie');
 const port = process.env.PORT || 3000;
 
 var server = restify.createServer({
@@ -13,20 +13,22 @@ server.use(function(req, res, next){
 });
 
 const cors = corsMiddleware({
-    //preflightMaxAge: 5, //Optional
-    origins: ['http://localhost:8080']//,
+    preflightMaxAge: 5, //Optional
+    origins: ['http://localhost:8080']
     //allowHeaders: ['API-Token'],
     //exposeHeaders: ['API-Token-Expiry']
   });
 
+
+server.pre(cors.preflight);
 server.use(cors.actual);
 server.use(restify.plugins.bodyParser());
 
-server.get('api/products', products.get);
-server.get('api/products/:id', products.getById);
-server.post('api/products', products.post);
-server.put('api/products/:id', products.put);
-server.del('api/products/:id', products.del);
+server.get('api/specie', specie.get);
+server.get('api/specie/:id', specie.getById);
+server.post('api/specie', specie.post);
+server.put('api/specie/:id', specie.put);
+server.del('api/specie/:id', specie.del);
 
 server.listen(port, function(){
     console.log('api running at ' + port);
