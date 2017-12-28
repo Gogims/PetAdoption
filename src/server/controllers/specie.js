@@ -52,7 +52,7 @@ class SpecieController{
             oldSpecie.update(req.body)
                     .then(updatedSpecie => res.send(200, updatedSpecie))
                     .catch(error => res.send(404, "there was an error updating the specie"));
-        }).catch(error => res.send(404, "specie not found"));;
+        }).catch(error => res.send(404, "specie not found!"));;
 
         return next();
     }
