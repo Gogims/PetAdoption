@@ -9,7 +9,7 @@ import SimpleForm from './simpleForm/simpleForm';
 
 function App(){
   return (
-    <SimpleForm name="specie"/>
+    <SimpleForm name="specie" id="1"/>
   );
 }
 

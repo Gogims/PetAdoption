@@ -17,6 +17,7 @@ class SimpleForm extends React.Component{
     }
 
     handleSubmit(){
+        console.log(this.props);
         const isUpdate = this.props.id !== undefined;
 
         if (isUpdate) {

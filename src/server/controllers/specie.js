@@ -8,6 +8,7 @@ class SpecieController{
         this.del = this.del.bind(this);
         this.get = this.get.bind(this);
         this.getById = this.getById.bind(this);
+        this.put = this.put.bind(this);
     }
 
     findSpecieById(req){
@@ -44,11 +45,11 @@ class SpecieController{
             return next(new errors.InvalidContentError('There is no body'));
         }
 
-        if (!req.body.hasOwnProperty('specie') && !req.body.hasOwnProperty('specieId')) {
+        if (!req.body.hasOwnProperty('specie') || !req.params.hasOwnProperty('specieId')) {
             return next(new errors.BadRequestError('Object not in right format'));
         }
 
-        findSpecieById(req).then(oldSpecie => {
+        this.findSpecieById(req).then(oldSpecie => {
             oldSpecie.update(req.body)
                     .then(updatedSpecie => res.send(200, updatedSpecie))
                     .catch(error => res.send(404, "there was an error updating the specie"));
@@ -58,7 +59,7 @@ class SpecieController{
     }
 
     del(req, res, next){
-        findSpecieById(req).then(specie => {
+        this.findSpecieById(req).then(specie => {
             specie.destroy().then(deletedSpecie => res.send(200, "specie deleted"))
         })
 

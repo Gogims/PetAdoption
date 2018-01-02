@@ -1,6 +1,7 @@
 const restify = require('restify');
 const corsMiddleware = require('restify-cors-middleware');
 const specie = require('./controllers/specie');
+const status = require('./controllers/status');
 const port = process.env.PORT || 3000;
 
 var server = restify.createServer({
@@ -25,10 +26,16 @@ server.use(cors.actual);
 server.use(restify.plugins.bodyParser());
 
 server.get('api/specie', specie.get);
-server.get('api/specie/:id', specie.getById);
+server.get('api/specie/:specieId', specie.getById);
 server.post('api/specie', specie.post);
-server.put('api/specie/:id', specie.put);
-server.del('api/specie/:id', specie.del);
+server.put('api/specie/:specieId', specie.put);
+server.del('api/specie/:specieId', specie.del);
+
+server.get('api/status', status.get);
+server.get('api/status/:statusId', status.getById);
+server.post('api/status', status.post);
+server.put('api/status/:statusId', status.put);
+server.del('api/status/:statusId', status.del);
 
 server.listen(port, function(){
     console.log('api running at ' + port);
