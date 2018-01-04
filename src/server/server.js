@@ -2,11 +2,16 @@ const restify = require('restify');
 const corsMiddleware = require('restify-cors-middleware');
 const specie = require('./controllers/specie');
 const status = require('./controllers/status');
+const graphqlRestify = require('graphql-server-restify').graphqlRestify;
+const graphiqlRestify = require('graphql-server-restify').graphiqlRestify;
+const myGraphQLSchema = {};
 const port = process.env.PORT || 3000;
 
-var server = restify.createServer({
+let server = restify.createServer({
     name: 'simple restify server'
 });
+
+const graphQLOptions = { schema: myGraphQLSchema };
 
 server.use(function(req, res, next){
     console.log(req.method + ' ' + req.url);
@@ -25,18 +30,9 @@ server.pre(cors.preflight);
 server.use(cors.actual);
 server.use(restify.plugins.bodyParser());
 
-server.get('api/specie', specie.get);
-server.get('api/specie/:specieId', specie.getById);
-server.post('api/specie', specie.post);
-server.put('api/specie/:specieId', specie.put);
-server.del('api/specie/:specieId', specie.del);
+server.post('/graphql', graphqlRestify(graphQLOptions));
+server.get('/graphql', graphqlRestify(graphQLOptions));
+ 
+server.get('/graphiql', graphiqlRestify({ endpointURL: '/graphql' }));
 
-server.get('api/status', status.get);
-server.get('api/status/:statusId', status.getById);
-server.post('api/status', status.post);
-server.put('api/status/:statusId', status.put);
-server.del('api/status/:statusId', status.del);
-
-server.listen(port, function(){
-    console.log('api running at ' + port);
-})
+server.listen(port, () => console.log('api running at ' + port));
