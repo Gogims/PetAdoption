@@ -13,3 +13,4 @@ const db = new Sequelize(config.database, config.username, config.password, {
 });
 
 module.exports = db;
+

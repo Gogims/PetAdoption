@@ -4,7 +4,7 @@ const specie = require('./controllers/specie');
 const status = require('./controllers/status');
 const graphqlRestify = require('graphql-server-restify').graphqlRestify;
 const graphiqlRestify = require('graphql-server-restify').graphiqlRestify;
-const myGraphQLSchema = {};
+const myGraphQLSchema = require('./models/graphQLSchema');
 const port = process.env.PORT || 3000;
 
 let server = restify.createServer({

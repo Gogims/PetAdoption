@@ -2613,6 +2613,11 @@
         "source-map-support": "0.5.0"
       }
     },
+    "graphql-relay": {
+      "version": "0.5.4",
+      "resolved": "https://registry.npmjs.org/graphql-relay/-/graphql-relay-0.5.4.tgz",
+      "integrity": "sha1-WAUM/hYRhZX4KrOqv8l0VGznVag="
+    },
     "graphql-sequelize": {
       "version": "5.6.1",
       "resolved": "https://registry.npmjs.org/graphql-sequelize/-/graphql-sequelize-5.6.1.tgz",
