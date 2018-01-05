@@ -2,6 +2,8 @@ const Sequelize = require('sequelize');
 const db = require ('./db');
 const Breeds = require('./breed');
 const attributeFields = require('graphql-sequelize').attributeFields;
+const resolver = require('graphql-sequelize').resolver;
+const defaultListArgs = require('graphql-sequelize').defaultListArgs;
 const GraphQLObjectType = require('graphql').GraphQLObjectType;
 
 const Species = db.define('specie', {
@@ -15,17 +17,16 @@ Species.hasMany(Breeds, {
     foreignKey: { allowNull: false }
 });
 
-let test= new Object();
-Object.assign(test, attributeFields(Species));
-
-let specieType = new GraphQLObjectType({
+const specieType = new GraphQLObjectType({
   name: 'Specie',
   description: 'A specie like dog',
-  fields: test
+  fields: attributeFields(Species)
 });
-
 
 module.exports = {
   sequelize: Species,
-  graphql: specieType
+  graphQL: {
+    type: specieType,
+    resolve: resolver(Species),
+    args: defaultListArgs(Species)}
 };
