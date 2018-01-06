@@ -1,6 +1,6 @@
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
-const myGraphQLSchema = require('./models/graphQLSchema');
+const myGraphQLSchema = require('./models/graphql/schema');
 const port = process.env.PORT || 3000;
 
 let server = express();

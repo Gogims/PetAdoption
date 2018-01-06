@@ -1,32 +1,26 @@
-const Sequelize = require('sequelize');
-const db = require ('./db');
-const Breeds = require('./breed');
-const attributeFields = require('graphql-sequelize').attributeFields;
-const resolver = require('graphql-sequelize').resolver;
-const defaultListArgs = require('graphql-sequelize').defaultListArgs;
-const GraphQLObjectType = require('graphql').GraphQLObjectType;
+const sequelize = require('./sequelize/specie');
 
-const Species = db.define('specie', {
-  specie: {
-    type: Sequelize.STRING(50),
-    allowNull: false
-  }
-});
+class Specie{
+    constructor(specie, id) {
+        this.id = id;
+        this.specie = specie;
+        
+        this.create = this.create.bind(this);
+    }
+    
+    create(){
+        if (this.specie === undefined && this.specie === null) {
+            throw error("Specie name is a required field");
+        }
 
-Species.hasMany(Breeds, {
-    foreignKey: { allowNull: false }
-});
+        const local = {
+            specie: this.specie
+        };
 
-const specieType = new GraphQLObjectType({
-  name: 'Specie',
-  description: 'A specie like dog',
-  fields: attributeFields(Species)
-});
+        return sequelize.create(local)
+                            .then(newSpecie => newSpecie)
+                            .catch(err => {throw err;})
+    }
+}
 
-module.exports = {
-  sequelize: Species,
-  graphQL: {
-    type: specieType,
-    resolve: resolver(Species),
-    args: defaultListArgs(Species)}
-};
+module.exports = Specie;
