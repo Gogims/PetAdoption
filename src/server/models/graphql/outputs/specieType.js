@@ -1,6 +1,6 @@
 const Specie = require('../../sequelize/specie');
-const { GraphQLObjectType } = require('graphql');
-const { attributeFields } = require('graphql-sequelize');
+const { GraphQLObjectType, GraphQLList } = require('graphql');
+const { resolver, defaultListArgs, attributeFields } = require('graphql-sequelize');
 
 const specieType = new GraphQLObjectType({
   name: 'Specie',
@@ -8,4 +8,13 @@ const specieType = new GraphQLObjectType({
   fields: attributeFields(Specie)
 });
 
-module.exports = specieType;
+module.exports = {
+  type: specieType,
+  schema: {
+    type: new GraphQLList(specieType),
+    resolve: resolver(Specie, {
+      list: true
+    }),
+    args: defaultListArgs(Specie)
+  }
+};

@@ -1,15 +1,16 @@
 const specieOutput = require('../outputs/specieType');
 const specieInput = require('../inputs/specieType');
 const { GraphQLNonNull } = require('graphql');
-const specieClass = require('../../specie');
+const Specie = require('../../specie');
 const { resolver } = require('graphql-sequelize');
-const Specie = require('../../sequelize/specie');
+const deletedType = require('../outputs/deleted');
+//const Specie = require('../../sequelize/specie');
 
-let resolverFn = resolver(Specie);
+//let resolverFn = resolver(Specie);
 
 const specieMutation = {
     createSpecie: {
-        type:  specieOutput,
+        type:  specieOutput.type,
         description: "Creates a new specie",
         args:{
             input: {
@@ -17,8 +18,34 @@ const specieMutation = {
             }
         },
         resolve: (root, {input}, context) => {
-            const specie = new specieClass(input.specie);
+            const specie = new Specie(input.specie);
             return specie.create();
+        }
+    },
+    updateSpecie: {
+        type: specieOutput.type,
+        description: "Updates an existing specie",
+        args:{
+            input:{
+                type: new GraphQLNonNull(specieInput)
+            }
+        },
+        resolve: (root, {input}, context) => {
+            const specie = new Specie(input.specie, input.id);
+            return specie.update();
+        }
+    },
+    deleteSpecie: {
+        type: deletedType,
+        description: "Deletes an existing specie",
+        args:{
+            input:{
+                type: new GraphQLNonNull(specieInput)
+            }
+        },
+        resolve: (root, {input}, context) => {
+            const specie = new Specie(null, input.id);
+            return specie.delete();
         }
     }
 }
