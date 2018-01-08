@@ -1,11 +1,10 @@
-const Sequelize = require('sequelize');
-const db = require ('./db');
-
-const Ears = db.define('ear', {
-    earType: {
-        type: Sequelize.STRING(50),
-        allowNull: false
-    }
-});
-
-module.exports = Ears;
+module.exports = (sequelize, DataTypes) => {
+    const Ears = sequelize.define('ear', {
+        earType: {
+            type: DataTypes.STRING(50),
+            allowNull: false
+        }
+    });
+  
+    return Ears;
+};

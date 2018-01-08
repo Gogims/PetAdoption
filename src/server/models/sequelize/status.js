@@ -1,11 +1,10 @@
-const Sequelize = require('sequelize');
-const db = require ('./db');
+module.exports = (sequelize, DataTypes) => {
+  const Status = sequelize.define('status', {
+    status: {
+      type: DataTypes.STRING(50),
+      allowNull: false
+    }
+  });
 
-const Status = db.define('status', {
-  status: {
-    type: Sequelize.STRING(50),
-    allowNull: false
-  }
-});
-
-module.exports = Status;
+  return Status;
+};

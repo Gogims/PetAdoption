@@ -1,4 +1,4 @@
-const sequelize = require('./sequelize/specie');
+const db = require('./sequelize/db');
 const helper = require('../../helper');
 
 class Specie{
@@ -13,7 +13,7 @@ class Specie{
     }
 
     findById(){
-        return sequelize.findById(this.id)
+        return db.specie.findById(this.id)
                 .then(specie => specie);
     }
     
@@ -26,7 +26,7 @@ class Specie{
             specie: this.specie
         };
 
-        return sequelize.create(local)
+        return db.specie.create(local)
                             .then(newSpecie => newSpecie)
                             .catch(err => {throw err;});
     }
@@ -47,7 +47,7 @@ class Specie{
         return this.findById().then(dbSpecie => {
             return dbSpecie.update(local)
                             .then(updatedSpecie => updatedSpecie)
-                            .catch(err => {throw err;});
+                            .catch(err => { throw err;});
         })
     }
 

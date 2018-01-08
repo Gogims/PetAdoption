@@ -1,20 +1,19 @@
-const Sequelize = require('sequelize');
-const db = require ('./db');
+module.exports = (sequelize, DataTypes) => {
+  const GuestBooks = sequelize.define('guestbook', {
+    name: {
+      type: DataTypes.STRING(50)
+    },
+    message: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    email: {
+      type: DataTypes.STRING(50)
+    },
+    approved: {
+      type: DataTypes.BOOLEAN
+    }
+  });
 
-const GuestBooks = db.define('guestbook', {
-  name: {
-    type: Sequelize.STRING(50)
-  },
-  message: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  email: {
-    type: Sequelize.STRING(50)
-  },
-  approved: {
-    type: Sequelize.BOOLEAN
-  }
-});
-
-module.exports = GuestBooks;
+  return GuestBooks;
+};

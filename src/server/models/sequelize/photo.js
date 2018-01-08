@@ -1,12 +1,10 @@
-const Sequelize = require('sequelize');
-const db = require ('./db');
-
-const Photos = db.define('photo', {
-  path: {
-    type: Sequelize.STRING
-  }
-});
-
 // TODO: add animalId FK
+module.exports = (sequelize, DataTypes) => {
+  const Photos = sequelize.define('photo', {
+    path: {
+      type: DataTypes.STRING
+    }
+  });
 
-module.exports = Status;
+  return Photos;
+};

@@ -1,17 +1,20 @@
-const Sequelize = require('sequelize');
-const db = require ('./db');
-const Breeds = require('./breed');
+module.exports = (sequelize, DataTypes) => {
+  const Species = sequelize.define('specie', {
+    specie: {
+      type: DataTypes.STRING(50),
+      allowNull: false
+    }
+  });
+  
+  Species.associate = models => {
+    Species.breeds = Species.hasMany(models.breed, {
+      as: 'breeds',
+      foreignKey: { 
+        name: "specieId",
+        allowNull: false 
+      }
+    });
+  };
 
-const Species = db.define('specie', {
-  specie: {
-    type: Sequelize.STRING(50),
-    allowNull: false
-  }
-});
-
-Species.hasMany(Breeds, {
-    foreignKey: { allowNull: false }
-});
-
-
-module.exports = Species;
+  return Species;
+};

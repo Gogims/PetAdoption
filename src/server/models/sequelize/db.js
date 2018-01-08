@@ -1,17 +1,30 @@
 const Sequelize = require('sequelize');
+const path = require('path');
 const config = require('../../config/config')[process.env.NODE_ENV];
+const fs = require('fs');
 
-const db = new Sequelize(config.database, config.username, config.password, {
-  host: config.host,
-  dialect: config.dialect,
+const sequelize = new Sequelize(config.database, config.username, config.password, config);
+var db = new Object();
 
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 10000,
-    idle: 10000
+fs.readdirSync(__dirname)
+.filter(file => {
+  //return (file.indexOf(".") !== 0) && (file !== "db.js");
+  return (file === "breed.js") || (file === "specie.js");
+})
+.forEach(file => {
+  const model = sequelize.import(path.join(__dirname, file));
+  db[model.name] = model;
+});
+
+Object.keys(db).forEach(modelName => {
+  if ("associate" in db[modelName]) {
+    db[modelName].associate(db);
   }
 });
+
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
+db.sequelize.sync();
 
 module.exports = db;
 

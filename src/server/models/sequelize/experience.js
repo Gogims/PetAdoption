@@ -1,11 +1,10 @@
-const Sequelize = require('sequelize');
-const db = require ('./db');
-
-const Experiences = db.define('experience', {
-    ownerExperience: {
-        type: Sequelize.STRING(50),
-        allowNull: false
-    }
-});
-
-module.exports = Experiences;
+module.exports = (sequelize, DataTypes) => {
+    const Experiences = sequelize.define('experience', {
+        ownerExperience: {
+            type: DataTypes.STRING(50),
+            allowNull: false
+        }
+    });
+  
+    return Experiences;
+};

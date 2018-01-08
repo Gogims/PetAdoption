@@ -2,10 +2,10 @@ const db = require('../../sequelize/db');
 const { attributeFields } = require('graphql-sequelize');
 const { GraphQLInputObjectType } = require('graphql');
 
-const SpecieInputType = new GraphQLInputObjectType({
+const BreedInputType = new GraphQLInputObjectType({
     name: 'SpecieInput',
     description: 'Specie payload',
-    fields: attributeFields(db.specie, {
+    fields: attributeFields(db.breed, {
         allowNull: true
     })
 });

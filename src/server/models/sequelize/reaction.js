@@ -1,11 +1,10 @@
-const Sequelize = require('sequelize');
-const db = require ('./db');
+module.exports = (sequelize, DataTypes) => {
+  const Reactions = sequelize.define('reaction', {
+    reaction: {
+      type: DataTypes.STRING(50),
+      allowNull: false
+    }
+  });
 
-const Reactions = db.define('reaction', {
-  reaction: {
-    type: Sequelize.STRING(50),
-    allowNull: false
-  }
-});
-
-module.exports = Reactions;
+  return Reactions;
+};

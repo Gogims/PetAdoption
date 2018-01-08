@@ -4,9 +4,9 @@ const { GraphQLNonNull } = require('graphql');
 const Specie = require('../../specie');
 const { resolver } = require('graphql-sequelize');
 const deletedType = require('../outputs/deleted');
-//const Specie = require('../../sequelize/specie');
+const db = require('../../sequelize/db');
 
-//let resolverFn = resolver(Specie);
+let resolverFn = resolver(db.specie.associations.breeds);
 
 const specieMutation = {
     createSpecie: {
@@ -30,7 +30,7 @@ const specieMutation = {
                 type: new GraphQLNonNull(specieInput)
             }
         },
-        resolve: (root, {input}, context) => {
+        resolve: (root, {input}, context, info) => {
             const specie = new Specie(input.specie, input.id);
             return specie.update();
         }

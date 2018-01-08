@@ -1,11 +1,20 @@
-const Sequelize = require('sequelize');
-const db = require ('./db');
-
-const Breeds = db.define('breed', {
-  breed: {
-    type: Sequelize.STRING(50),
-    allowNull: false
+module.exports = (sequelize, DataTypes) => {
+  const Breeds = sequelize.define('breed', {
+    breed: {
+      type: DataTypes.STRING(50),
+      allowNull: false
+    }
+  });
+  
+  Breeds.associate = models => {
+    Breeds.belongsTo(models.specie, {
+      as: 'specie',
+      foreignKey: { 
+        name: "specieId",
+        allowNull: false 
+      }
+    });
   }
-});
 
-module.exports = Breeds;
+  return Breeds;
+};
