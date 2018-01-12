@@ -5,6 +5,20 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         }
     });
+
+    Frequencies.associate = models => {
+        Frequencies.hasMany(models.pet, {
+            foreignKey: "exerciseId"
+        });
+
+        Frequencies.hasMany(models.pet, {
+            foreignKey: "groomingId"
+        });
+
+        Frequencies.hasMany(models.pet, {
+            foreignKey: "sheddingId"
+        });
+    };
   
     return Frequencies;
 };

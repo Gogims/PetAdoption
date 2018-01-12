@@ -5,6 +5,12 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         }
     });
+
+    Ears.associate = models => {
+        Ears.hasMany(models.pet, {
+            foreignKey: "earId"
+        });
+    };
   
     return Ears;
 };

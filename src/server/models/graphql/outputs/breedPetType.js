@@ -33,7 +33,6 @@ const breedPetType = new GraphQLObjectType({
       resolve: (_, args, context) => {
         const breedPet = new BreedPet(args);
         return breedPet.findAll();
-        //return db.sequelize.query("SELECT * FROM breedpet", { type: db.sequelize.QueryTypes.SELECT})
       },
       args: {
           breedIds: {

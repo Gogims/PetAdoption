@@ -2,7 +2,7 @@ const db = require('./sequelize/db');
 const helper = require('../../helper');
 
 class Specie{
-    constructor(specie, id) {
+    constructor(id, specie) {
         this.id = id;
         this.specie = specie;
         

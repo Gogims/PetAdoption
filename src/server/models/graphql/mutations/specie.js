@@ -6,8 +6,6 @@ const { resolver } = require('graphql-sequelize');
 const deletedType = require('../outputs/deleted');
 const db = require('../../sequelize/db');
 
-let resolverFn = resolver(db.specie.associations.breeds);
-
 const specieMutation = {
     createSpecie: {
         type:  specieOutput.type,
@@ -18,7 +16,7 @@ const specieMutation = {
             }
         },
         resolve: (root, {input}, context) => {
-            const specie = new Specie(input.specie);
+            const specie = new Specie(null, input.specie);
             return specie.create();
         }
     },
@@ -31,7 +29,7 @@ const specieMutation = {
             }
         },
         resolve: (root, {input}, context, info) => {
-            const specie = new Specie(input.specie, input.id);
+            const specie = new Specie(input.id, input.specie);
             return specie.update();
         }
     },
@@ -44,7 +42,7 @@ const specieMutation = {
             }
         },
         resolve: (root, {input}, context) => {
-            const specie = new Specie(null, input.id);
+            const specie = new Specie(input.id);
             return specie.delete();
         }
     }

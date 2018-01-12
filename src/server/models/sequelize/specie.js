@@ -7,11 +7,9 @@ module.exports = (sequelize, DataTypes) => {
   });
   
   Species.associate = models => {
-    Species.breeds = Species.hasMany(models.breed, {
-      as: 'breeds',
+    Species.hasMany(models.breed, {
       foreignKey: { 
-        name: "specieId",
-        allowNull: false 
+        name: "specieId"
       }
     });
   };

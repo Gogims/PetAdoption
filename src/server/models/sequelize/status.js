@@ -6,5 +6,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
 
+  Status.associate = models => {
+    Status.hasMany(models.pet, {
+      foreignKey: { 
+        name: "statusId"
+      }
+    });
+  };
+
   return Status;
 };

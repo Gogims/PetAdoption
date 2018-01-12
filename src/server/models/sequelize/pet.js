@@ -10,14 +10,11 @@ module.exports = (sequelize, DataTypes) => {
         birthEstimate: {
             type: DataTypes.BOOLEAN
         },
-        statusId: {
-            type: DataTypes.INTEGER
-        },
         currentSize: {
-            type: DataTypes.INTEGER
+            type: DataTypes.DOUBLE
         },
         potentialSize: {
-            type: DataTypes.INTEGER
+            type: DataTypes.DOUBLE
         },
         fenceRequired: {
             type: DataTypes.BOOLEAN
@@ -49,6 +46,33 @@ module.exports = (sequelize, DataTypes) => {
 
     Pets.associate = models => {
         Pets.belongsToMany(models.breed, {through: 'BreedPet'});
+        Pets.belongsTo(models.status, {
+            as: 'status',
+            foreignKey: "statusId"
+        });
+        Pets.belongsTo(models.ear, {
+            as: 'ear',
+            foreignKey: "earId"
+        });
+        Pets.belongsTo(models.tail, {
+            as: 'tail',
+            foreignKey: "tailId"
+        });
+        Pets.belongsTo(models.frequency, {
+            as: 'exercise',
+            foreignKey: "exerciseId"
+        });
+        Pets.belongsTo(models.frequency, {
+            as: 'grooming',
+            foreignKey: "groomingId"
+        });
+        Pets.belongsTo(models.frequency, {
+            as: 'shedding',
+            foreignKey: "sheddingId"
+        });
+
+        Pets.belongsToMany(models.color, {through: 'ColorPet'});
+        //TODO: add experience and reaction association
     }
   
     return Pets;
