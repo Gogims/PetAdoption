@@ -14,7 +14,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false 
       }
     });
+
+    Breeds.belongsToMany(models.pet, {through: 'BreedPet'});
   }
+
 
   return Breeds;
 };

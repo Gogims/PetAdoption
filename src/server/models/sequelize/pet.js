@@ -46,6 +46,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING
         }
     });
+
+    Pets.associate = models => {
+        Pets.belongsToMany(models.breed, {through: 'BreedPet'});
+    }
   
     return Pets;
 };

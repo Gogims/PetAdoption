@@ -18,9 +18,7 @@ module.exports = {
   type: breedType,
   schema: {
     type: new GraphQLList(breedType),
-    resolve: resolver(db.breed, {
-      list: true
-    }),
+    resolve: resolver(db.breed),
     args: defaultListArgs(db.breed)
   }
 };

@@ -9,7 +9,7 @@ var db = new Object();
 fs.readdirSync(__dirname)
 .filter(file => {
   //return (file.indexOf(".") !== 0) && (file !== "db.js");
-  return (file === "breed.js") || (file === "specie.js");
+  return (file === "breed.js") || (file === "specie.js") || (file === "pet.js");
 })
 .forEach(file => {
   const model = sequelize.import(path.join(__dirname, file));
