@@ -2,9 +2,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const myGraphQLSchema = require('./models/graphql/schema');
+const cors = require('cors');
 const port = process.env.PORT || 3000;
 
 let server = express();
+
+server.use(cors({
+    origin: 'http://localhost:8080'
+}));
 
 // The GraphQL endpoint
 server.use('/graphql', bodyParser.json(), graphqlExpress({
