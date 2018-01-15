@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 class Helper{
     constructor(){
         this.isEmpty = this.isEmpty.bind(this);
@@ -9,6 +11,15 @@ class Helper{
         }
 
         return obj === undefined || obj === null || obj === '';
+    }
+
+    createDropDown(name, path, subMenu){
+        return {
+            key: name,
+            as: Link,
+            text: name,
+            to: path
+        };
     }
 }
 
