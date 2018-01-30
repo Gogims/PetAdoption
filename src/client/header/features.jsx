@@ -3,17 +3,17 @@ import { Dropdown } from 'semantic-ui-react'
 import helper from '../../helper';
 import { Route } from 'react-router-dom';
 
-class HomeHeader extends React.Component{
+class FeatureHeader extends React.Component{
     render(){
         const items = [
-            helper.createDropDownItem("About Us", "/about"),
-            helper.createDropDownItem("Contact Us", "/contact")
+            helper.createDropDownItem("Shop", "/shop"),
+            helper.createDropDownItem("Guestbook", "/guestbook")
         ];
 
         const dropdown = () => (
             <Route render={({ history }) => (
                 <Dropdown onClick={() => { history.push('/')}} 
-                    text="Home" 
+                    text="Website Features" 
                     options={items} 
                     simple 
                     item
@@ -25,4 +25,4 @@ class HomeHeader extends React.Component{
     }
 }
 
-export default HomeHeader;
+export default FeatureHeader;

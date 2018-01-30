@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+const { Link } = require('react-router-dom');
 
 class Helper{
     constructor(){
@@ -13,7 +13,7 @@ class Helper{
         return obj === undefined || obj === null || obj === '';
     }
 
-    createDropDown(name, path, subMenu){
+    createDropDownItem(name, path, subMenu){
         return {
             key: name,
             as: Link,

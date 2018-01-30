@@ -3,17 +3,17 @@ import { Dropdown } from 'semantic-ui-react'
 import helper from '../../helper';
 import { Route } from 'react-router-dom';
 
-class HomeHeader extends React.Component{
+class AnimalHeader extends React.Component{
     render(){
         const items = [
-            helper.createDropDownItem("About Us", "/about"),
-            helper.createDropDownItem("Contact Us", "/contact")
+            helper.createDropDownItem("Search Animals", "/animals"),
+            helper.createDropDownItem("Successful Adoptions", "/success")
         ];
 
         const dropdown = () => (
             <Route render={({ history }) => (
                 <Dropdown onClick={() => { history.push('/')}} 
-                    text="Home" 
+                    text="Animals" 
                     options={items} 
                     simple 
                     item
@@ -25,4 +25,4 @@ class HomeHeader extends React.Component{
     }
 }
 
-export default HomeHeader;
+export default AnimalHeader;

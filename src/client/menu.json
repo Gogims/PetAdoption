@@ -1,0 +1,44 @@
+[
+    {
+        "name": "Home",
+        "path": "/",
+        "items": [
+            {
+                "name": "About Us",
+                "path": "/about"
+            },
+            {
+                "name": "Contact Us",
+                "path": "/contact"
+            }
+        ]
+    },
+    {
+        "name": "Website Features",
+        "path": "/",
+        "items": [
+            {
+                "name": "Shop",
+                "path": "/shop"
+            },
+            {
+                "name": "Guestbook",
+                "path": "/guestbook"
+            }
+        ]
+    },
+    {
+        "name": "Animals",
+        "path": "/animal",
+        "items": [
+            {
+                "name": "Search Animals",
+                "path": "/animals"
+            },
+            {
+                "name": "Successful Adoptions",
+                "path": "/success"
+            }
+        ]
+    }
+]
