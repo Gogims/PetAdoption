@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu } from 'semantic-ui-react';
+import { Menu, Dropdown } from 'semantic-ui-react';
 import HomeMenu from './home';
 import FeatureMenu from './features';
 import AnimalMenu from './animal';
@@ -8,7 +8,7 @@ import AnimalMenu from './animal';
 class Header extends React.Component{
     render(){
         return(
-            <Menu>
+            <Menu fixed="top">
                 <HomeMenu/>
                 <FeatureMenu/>
                 <AnimalMenu/>

@@ -4,6 +4,14 @@ import helper from '../../helper';
 import { Route } from 'react-router-dom';
 
 class HomeHeader extends React.Component{
+    goHome(e, data) {
+        var history = this;
+
+        history.push('/');
+        console.log(data);
+        // TODO: Make dropdown close
+    }
+
     render(){
         const items = [
             helper.createDropDownItem("About Us", "/about"),
@@ -12,12 +20,12 @@ class HomeHeader extends React.Component{
 
         const dropdown = () => (
             <Route render={({ history }) => (
-                <Dropdown onClick={() => { history.push('/')}} 
-                    text="Home" 
-                    options={items} 
-                    simple 
+                <Dropdown onClick={this.goHome.bind(history)}
+                    text="Home"
+                    options={items}
+                    simple
                     item
-                    />
+                />
             )} />
           );
 

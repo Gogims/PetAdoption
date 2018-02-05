@@ -8,13 +8,11 @@ import SpecieList from './admin/specie/list';
 class Main extends React.Component{
   render(){
     return (
-      <main>
-        <Switch>
-          <Route exact path='/' component={Home}/>
-          <Route exact path='/about' component={About}/>
-          <Route exact path='/contact' component={Contact}/>
-        </Switch>
-      </main>
+      <Switch>
+        <Route exact path='/' component={Home}/>
+        <Route exact path='/about' component={About}/>
+        <Route exact path='/contact' component={Contact}/>
+      </Switch>
     )
   }
 }
