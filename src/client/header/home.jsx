@@ -8,7 +8,6 @@ class HomeHeader extends React.Component{
         var history = this;
 
         history.push('/');
-        console.log(data);
         // TODO: Make dropdown close
     }
 

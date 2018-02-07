@@ -1,8 +1,8 @@
 import React from 'react';
 
-class Home extends React.Component{
+class Home extends React.Component {
 
-    render(){
+    render() {
         const starterLink = "https://givingassistant.org/np#katies-roadside-rescue";
 
         return (
