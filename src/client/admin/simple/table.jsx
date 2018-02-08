@@ -1,7 +1,6 @@
 import React from 'react';
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
-import SimpleEntity from './entity';
+import { Table } from 'semantic-ui-react';
+import SimpleTableBody from './tableBody';
 
 class SimpleTable extends React.Component {
 
@@ -14,12 +13,30 @@ class SimpleTable extends React.Component {
       return null;
     }
 
+    const entities = this.props.data[this.props.entities];
+    const header = this.props.entity.charAt(0).toUpperCase() + this.props.entity.slice(1);
+
     return (
-      <ul>
-        {this.props.data.species.map(({ id, specie }) => (
-          <li key={id}>{specie}</li>
-        ))}
-      </ul>
+      <Table celled>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell>
+              {header}
+            </Table.HeaderCell>
+            <Table.HeaderCell></Table.HeaderCell>
+            <Table.HeaderCell></Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          {
+            entities.map(entity => {
+              const value = entity[this.props.entity];
+              
+              return <SimpleTableBody key={entity.id} value={value} id={entity.id} />;
+            })
+          }
+        </Table.Body>
+      </Table>
     );
   }
 }

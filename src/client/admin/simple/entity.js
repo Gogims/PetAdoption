@@ -26,6 +26,16 @@ function withEntity(TableComponent, entity) {
     }
 
     return class extends React.Component {
+        constructor(props) {
+            super(props);
+            const plural = helper.pluralizeWord(entity);
+
+            this.state = {
+                entities: plural,
+                entity: entity
+            };
+        }
+
         componentWillMount() {
             const ApolloTable = constructApolloComponent()(TableComponent);
 
@@ -37,7 +47,10 @@ function withEntity(TableComponent, entity) {
         render() {
             const ApolloTable = this.state.apolloTable;
 
-            return <ApolloTable/>;
+            return <ApolloTable
+                entity={this.state.entity}
+                entities={this.state.entities} 
+                {...this.props}/>;
         }
     }
 }
