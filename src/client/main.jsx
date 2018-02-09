@@ -3,7 +3,6 @@ import { Switch, Route } from 'react-router-dom';
 import Home from './home/home';
 import About from './home/about';
 import Contact from './home/contact';
-import SpecieList from './admin/specie/list';
 import withEntity from './admin/simple/entity';
 import SimpleTable from './admin/simple/table';
 

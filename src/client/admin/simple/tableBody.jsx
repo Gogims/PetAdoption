@@ -10,10 +10,18 @@ class SimpleTableBody extends React.Component {
             valueChanged: false
         }
 
-        this.onHandleChange = this.onHandleChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleCreate = this.handleCreate.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this);
     }
 
-    onHandleChange($event, data) {
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            valueChanged: this.state.value !== nextProps.value
+        })
+    }
+
+    handleChange($event, data) {
 
         this.setState({
             value: data.value,
@@ -21,15 +29,29 @@ class SimpleTableBody extends React.Component {
         });
     }
 
+    handleCreate() {
+        this.props.onHandleCreate(this.props.id, this.state.value);
+    }
+
+    handleUpdate() {
+        this.props.onHandleUpdate(this.props.id, this.state.value);
+    }
+
     render() {
         const button = this.props.new ?
         (
-            <Button fluid disabled={!this.state.valueChanged} color="green">
+            <Button fluid 
+                    disabled={!this.state.valueChanged} 
+                    color="green"
+                    onClick={this.handleCreate}>
                 <Icon name="add" />
             </Button>
         ) : 
         (
-            <Button fluid disabled={!this.state.valueChanged} color="blue">
+            <Button fluid 
+                    disabled={!this.state.valueChanged} 
+                    color="blue"
+                    onClick={this.handleUpdate}>
                 <Icon name="edit" />
             </Button>
         );
@@ -37,7 +59,7 @@ class SimpleTableBody extends React.Component {
         return (
             <Table.Row>
                 <Table.Cell>
-                    <Input value={this.state.value} onChange={this.onHandleChange} fluid/>
+                    <Input value={this.state.value} onChange={this.handleChange} fluid/>
                 </Table.Cell>
                 <Table.Cell>
                     { button }
