@@ -90,6 +90,7 @@ function withEntity(TableComponent, entity) {
                 entity={this.state.entity}
                 entities={this.state.entities} 
                 capitalized={capitalized}
+                gqlRead={constructQuery()}
                 {...this.props}/>;
         }
     }

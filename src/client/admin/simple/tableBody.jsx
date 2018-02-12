@@ -6,26 +6,23 @@ class SimpleTableBody extends React.Component {
         super(props);
 
         this.state = {
-            value: this.props.value,
-            valueChanged: false
-        }
+            value: this.props.value
+        };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleCreate = this.handleCreate.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({
-            valueChanged: this.state.value !== nextProps.value
-        })
+        
     }
 
     handleChange($event, data) {
 
         this.setState({
-            value: data.value,
-            valueChanged: this.props.value !== data.value
+            value: data.value
         });
     }
 
@@ -37,11 +34,17 @@ class SimpleTableBody extends React.Component {
         this.props.onHandleUpdate(this.props.id, this.state.value);
     }
 
+    handleDelete() {
+        this.props.onHandleDelete(this.props.id);
+    }
+
     render() {
+        const isEqual = this.state.value === this.props.value;
+
         const button = this.props.new ?
         (
             <Button fluid 
-                    disabled={!this.state.valueChanged} 
+                    disabled={isEqual} 
                     color="green"
                     onClick={this.handleCreate}>
                 <Icon name="add" />
@@ -49,12 +52,13 @@ class SimpleTableBody extends React.Component {
         ) : 
         (
             <Button fluid 
-                    disabled={!this.state.valueChanged} 
+                    disabled={isEqual} 
                     color="blue"
                     onClick={this.handleUpdate}>
                 <Icon name="edit" />
             </Button>
         );
+
 
         return (
             <Table.Row>
@@ -65,7 +69,7 @@ class SimpleTableBody extends React.Component {
                     { button }
                 </Table.Cell>
                 <Table.Cell>
-                    <Button fluid color="red">
+                    <Button fluid color="red" onClick={this.handleDelete}>
                         <Icon name="delete"/>
                     </Button>
                 </Table.Cell>
