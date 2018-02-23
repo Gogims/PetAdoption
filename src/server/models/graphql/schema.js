@@ -1,7 +1,6 @@
 const specieOutput = require('./outputs/specieType');
 const breedOutput = require('./outputs/breedType');
 const breedPetOutput = require('./outputs/breedPetType');
-const mutations = require('./mutations/root');
 const { GraphQLObjectType, GraphQLSchema } = require('graphql');
 const fs = require('fs');
 const path = require('path');
@@ -19,6 +18,15 @@ fs.readdirSync(outputPath)
     });
 });
 
+let mutationList = new Object();
+const mutationPath = path.join(__dirname, 'mutations');
+
+fs.readdirSync(mutationPath)
+.forEach(file => {
+  const mutation = require(path.join(mutationPath, file));
+  Object.assign(mutationList, mutation);
+});
+
 const schema = new GraphQLSchema({
     query: new GraphQLObjectType({
         name: 'Query',
@@ -26,7 +34,7 @@ const schema = new GraphQLSchema({
     }),
     mutation: new GraphQLObjectType({
         name: 'Mutation',
-        fields: mutations
+        fields: mutationList
     })
 });
 

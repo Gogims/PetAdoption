@@ -1,5 +1,4 @@
-import { error } from 'util';
-
+const { error } = require('util');
 const { Link } = require('react-router-dom');
 
 class Helper {
