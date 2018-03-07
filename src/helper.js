@@ -25,7 +25,7 @@ class Helper {
     }
 
     pluralizeWord(word) {
-        let plural = new Object(word);
+        let plural = Object.assign({}, word);
         plural += word.endsWith("s") ? "es" : "s";
 
         return plural;

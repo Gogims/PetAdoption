@@ -4,7 +4,7 @@ const helper = require('../../helper');
 class Experience{
     constructor(id, experience) {
         this.id = id;
-        this.experience = experience;
+        this.ownerExperience = experience;
         
         this.findById = this.findById.bind(this);
         this.create = this.create.bind(this);
@@ -18,16 +18,22 @@ class Experience{
     }
     
     create(){
-        if (helper.isEmpty(this.experience)) {
+        if (helper.isEmpty(this.ownerExperience)) {
             throw error("Experience name is a required field to create");
         }
 
         const local = {
-            experience: this.experience
+            ownerExperience: this.ownerExperience
         };
 
         return db.experience.create(local)
-                            .then(newExperience => newExperience)
+                            .then(newExperience => {
+                                let exp = Object.assign({}, newExperience.dataValues);
+                                exp.experience = newExperience.ownerExperience;
+                                delete exp.ownerExperience;
+
+                                return exp;
+                            })
                             .catch(err => {throw err;});
     }
 
@@ -35,13 +41,13 @@ class Experience{
         if (helper.isEmpty(this.id)) {
             throw error("Id is a required field to update");
         }
-        else if (helper.isEmpty(this.experience)) {
+        else if (helper.isEmpty(this.ownerExperience)) {
             throw error("Experience name is a required field to update");
         }
 
         const local = {
             id: this.id,
-            experience: this.experience
+            ownerExperience: this.ownerExperience
         }
 
         return this.findById().then(dbExperience => {

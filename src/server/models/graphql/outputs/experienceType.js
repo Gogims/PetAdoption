@@ -23,15 +23,17 @@ module.exports = {
     resolve: resolver(db.experience, {
       list: true,
       before: (findOptions, args, context) => {
-        let newArgs = new Object(args);
+        const newArgs = Object.assign({}, args);
 
         if (!helper.isEmpty(newArgs.where) && !helper.isEmpty(newArgs.where.experience)) {
           newArgs.where.ownerExperience = newArgs.where.experience;
           delete newArgs.where.experience;
         }
 
-        let newOptions = new Object(findOptions);
-        newOptions.where = newArgs.where;
+        const newOptions = Object.assign({}, findOptions, {
+          where: newArgs.where
+        });
+
         return newOptions;
       },
       after: (result, args, context) => {

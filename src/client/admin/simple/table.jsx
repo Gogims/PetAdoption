@@ -32,7 +32,7 @@ class SimpleTable extends React.Component {
         this.state.entities[entitiesCount - 1].id + 1 :
         1;
 
-      const newEntity = new Object({
+      const newEntity = Object.assign({}, {
         id: newId,
         [this.props.entity]: "",
         new: true
@@ -110,7 +110,7 @@ class SimpleTable extends React.Component {
     let remove;
     const updatedEntities = this.state.entities.filter(entity => {
       if (entity.id === id) {
-        remove = new Object(entity);
+        remove = Object.assign({}, entity);
       }
       return entity.id !== id
     });
