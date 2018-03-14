@@ -4,7 +4,7 @@ import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 
 function withEntity(TableComponent, entity) {
-    const plural = helper.pluralizeWord(entity);
+    const plural = helper.pluralize(entity);
     const capitalized = helper.capitalizeWord(entity);
     
     function constructQuery() {
@@ -62,7 +62,7 @@ function withEntity(TableComponent, entity) {
     return class extends React.Component {
         constructor(props) {
             super(props);
-            const plural = helper.pluralizeWord(entity);
+            const plural = helper.pluralize(entity);
 
             this.state = {
                 entities: plural,

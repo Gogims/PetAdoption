@@ -24,11 +24,41 @@ class Helper {
         };
     }
 
-    pluralizeWord(word) {
-        let plural = Object.assign({}, word);
-        plural += word.endsWith("s") ? "es" : "s";
+    pluralize(word) {
+        let plural = "";
+        const lastLetter = word.slice(-1);
+
+        switch (lastLetter) {
+            case "s":
+                plural = word.slice(0) + "es";
+                break;
+
+            case "y":
+                plural = word.slice(0, -1) + "ies";
+                break;
+        
+            default:
+                plural = word.slice(0) + "s";
+                break;
+        }
 
         return plural;
+    }
+
+    singularize(word) {
+        let singular = "";
+
+        if (word.endsWith("es")) {
+            singular = word.slice(0, -2);
+        }
+        else if (word.endsWith("ies")) {
+            singular = word.slice(0, -3) + "y";
+        }
+        else {
+            singular = word.slice(-1);
+        }
+
+        return singular;
     }
 
     capitalizeWord(word) {

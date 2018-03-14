@@ -4,6 +4,7 @@ const breedPetOutput = require('./outputs/breedPetType');
 const { GraphQLObjectType, GraphQLSchema } = require('graphql');
 const fs = require('fs');
 const path = require('path');
+const helper = require('../../../helper');
 
 let schemaList = new Object();
 const outputPath = path.join(__dirname, 'outputs');
@@ -12,7 +13,7 @@ fs.readdirSync(outputPath)
 .filter(file => file !== "deleted.js")
 .forEach(file => {
   const output = require(path.join(outputPath, file));
-  const propertyName = file.slice(0, -7) + "s";
+  const propertyName = helper.pluralize(file.slice(0, -7));
   Object.assign(schemaList, {
       [propertyName]: output.schema
     });

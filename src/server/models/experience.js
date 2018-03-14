@@ -10,6 +10,15 @@ class Experience{
         this.create = this.create.bind(this);
         this.update = this.update.bind(this);
         this.delete = this.delete.bind(this);
+        this.toGraphQL = this.toGraphQL.bind(this);
+    }
+
+    toGraphQL(dbExperience) {
+        let exp = Object.assign({}, dbExperience.dataValues);
+        exp.experience = dbExperience.ownerExperience;
+        delete exp.ownerExperience;
+
+        return exp;
     }
 
     findById(){
@@ -27,13 +36,7 @@ class Experience{
         };
 
         return db.experience.create(local)
-                            .then(newExperience => {
-                                let exp = Object.assign({}, newExperience.dataValues);
-                                exp.experience = newExperience.ownerExperience;
-                                delete exp.ownerExperience;
-
-                                return exp;
-                            })
+                            .then(newExperience => this.toGraphQL(newExperience))
                             .catch(err => {throw err;});
     }
 
@@ -52,7 +55,7 @@ class Experience{
 
         return this.findById().then(dbExperience => {
             return dbExperience.update(local)
-                            .then(updatedExperience => updatedExperience)
+                            .then(updatedExperience => this.toGraphQL(updatedExperience))
                             .catch(err => { throw err;});
         })
     }
