@@ -6,7 +6,14 @@ import { Route } from 'react-router-dom';
 class AdminHeader extends React.Component {
     render(){
         const items = [
-            helper.createDropDownItem("Specie", "/specie")
+            helper.createDropDownItem("Specie", "/specie"),
+            helper.createDropDownItem("Color", "/color"),
+            helper.createDropDownItem("Experience", "/experience"),
+            helper.createDropDownItem("Reaction", "/reaction"),
+            helper.createDropDownItem("Status", "/status"),
+            helper.createDropDownItem("Ear", "/ear"),
+            helper.createDropDownItem("Frequency", "/frequency"),
+            helper.createDropDownItem("Tail", "/tail")
         ];
 
         const dropdown = () => (

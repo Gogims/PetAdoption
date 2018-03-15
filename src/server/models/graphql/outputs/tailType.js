@@ -37,10 +37,11 @@ module.exports = {
         return newOptions;
       },
       after: (result, args, context) => {
-        const newResult = result.map(tail => {
-          tail.tail = tail.ownerTail;
-          // Tried the delete operator, but property still there
-          tail.ownerTail = undefined;
+        const newResult = result.map(tailDb => {
+          const tail = tailDb.dataValues;
+          tail.tail = tail.tailType;
+          delete tail.tailType;
+          
           return tail;
         });
         

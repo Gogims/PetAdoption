@@ -37,10 +37,11 @@ module.exports = {
         return newOptions;
       },
       after: (result, args, context) => {
-        const newResult = result.map(experience => {
+        const newResult = result.map(experienceDb => {
+          const experience = experienceDb.dataValues;
           experience.experience = experience.ownerExperience;
-          // Tried the delete operator, but property still there
-          experience.ownerExperience = undefined;
+          delete experience.ownerExperience;
+
           return experience;
         });
         

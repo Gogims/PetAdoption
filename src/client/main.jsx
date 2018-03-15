@@ -8,29 +8,21 @@ import SimpleTable from './admin/simple/table';
 
 class Main extends React.Component {
   render(){
-    let SpecieAdmin = withEntity(SimpleTable, "specie");
 
     return (
       <Switch>
         <Route exact path='/' component={Home}/>
         <Route exact path='/about' component={About}/>
         <Route exact path='/contact' component={Contact}/>
-        <Route exact path='/specie' component={SpecieAdmin}/>
+        <Route exact path='/specie' component={withEntity(SimpleTable, "specie")}/>
+        <Route exact path='/color' component={withEntity(SimpleTable, "color")}/>
+        <Route exact path='/experience' component={withEntity(SimpleTable, "experience")}/>
+        <Route exact path='/reaction' component={withEntity(SimpleTable, "reaction")}/>
+        <Route exact path='/status' component={withEntity(SimpleTable, "status")}/>
+        <Route exact path='/ear' component={withEntity(SimpleTable, "ear")}/>
+        <Route exact path='/frequency' component={withEntity(SimpleTable, "frequency")}/>
+        <Route exact path='/tail' component={withEntity(SimpleTable, "tail")}/>
       </Switch>
-    )
-  }
-}
-
-class Roster extends React.Component{
-  render(){
-    return (
-      <div>
-        <h2>This is a roster page!</h2>
-        <Switch>
-          <Route exact path='/roster' component={FullRoster}/>
-          <Route path='/roster/:number' component={Player}/>
-        </Switch>
-      </div>
     )
   }
 }

@@ -37,10 +37,11 @@ module.exports = {
         return newOptions;
       },
       after: (result, args, context) => {
-        const newResult = result.map(ear => {
-          ear.ear = ear.ownerEar;
-          // Tried the delete operator, but property still there
-          ear.ownerEar = undefined;
+        const newResult = result.map(earDb => {
+          const ear = earDb.dataValues;
+          ear.ear = ear.earType;
+          delete ear.earType;
+
           return ear;
         });
         
