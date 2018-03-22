@@ -144,8 +144,12 @@ class SimpleTable extends React.Component {
   }
 
   render() {
-    if (this.props.data.loading || this.props.data.error) {
+    if (this.props.data.loading) {
       return null;
+    }
+    // TODO: Better error handling
+    else if(this.props.data.error) {
+      console.log(error);
     }
 
     const entities = this.state.entities;

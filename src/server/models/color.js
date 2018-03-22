@@ -19,7 +19,7 @@ class Color{
     
     create(){
         if (helper.isEmpty(this.color)) {
-            throw error("Color name is a required field to create");
+            throw new Error("Color name is a required field to create");
         }
 
         const local = {
@@ -33,32 +33,32 @@ class Color{
 
     update(){
         if (helper.isEmpty(this.id)) {
-            throw error("Id is a required field to update");
+            throw new Error("Id is a required field to update");
         }
         else if (helper.isEmpty(this.color)) {
-            throw error("Color name is a required field to update");
+            throw new Error("Color name is a required field to update");
         }
 
         const local = {
             id: this.id,
             color: this.color
-        }
+        };
 
         return this.findById().then(dbColor => {
             return dbColor.update(local)
                             .then(updatedColor => updatedColor)
                             .catch(err => { throw err;});
-        })
+        });
     }
 
     delete(){
         if (helper.isEmpty(this.id)) {
-            throw error("Id is a required field to update");
+            throw new Error("Id is a required field to update");
         }
 
         const local = {
             id: this.id
-        }
+        };
 
         return this.findById().then(dbColor => {
             return dbColor.destroy(local)
@@ -68,7 +68,7 @@ class Color{
                                     message: "Color Deleted"
                                 }
                             }).catch(err => {throw err;});
-        })
+        });
     }
 }
 

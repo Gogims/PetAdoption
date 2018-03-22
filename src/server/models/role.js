@@ -20,15 +20,11 @@ class Role{
     
     create(){
         if (helper.isEmpty(this.role)) {
-            throw error("Role name is a required field to create");
-        }
-        else if (helper.isEmpty(this.userId)) {
-            throw error("User Id is a required field to create");
+            throw new Error("Role name is a required field to create");
         }
 
         const local = {
-            role: this.role,
-            userId: this.userId
+            role: this.role
         };
 
         return db.role.create(local)
@@ -38,13 +34,13 @@ class Role{
 
     update(){
         if (helper.isEmpty(this.id)) {
-            throw error("Id is a required field to update");
+            throw new Error("Id is a required field to update");
         }
         else if (helper.isEmpty(this.role)) {
-            throw error("Role name is a required field to update");
+            throw new Error("Role name is a required field to update");
         }
         else if (helper.isEmpty(this.userId)) {
-            throw error("User Id is a required field to update");
+            throw new Error("User Id is a required field to update");
         }
 
         const local = {
@@ -62,7 +58,7 @@ class Role{
 
     delete(){
         if (helper.isEmpty(this.id)) {
-            throw error("Id is a required field to update");
+            throw new Error("Id is a required field to update");
         }
 
         const local = {

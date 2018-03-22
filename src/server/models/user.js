@@ -1,10 +1,15 @@
 const db = require('./sequelize/db');
 const helper = require('../../helper');
 
-class Specie{
-    constructor(id, specie) {
+class User{
+    constructor(id, user) {
         this.id = id;
-        this.specie = specie;
+        this.userName = user.userName;
+        this.password = user.password;
+        this.email = user.email;
+        this.firstName = user.firstName;
+        this.lastName = user.lastName;
+        this.zipcode = user.zipcode;
         
         this.findById = this.findById.bind(this);
         this.create = this.create.bind(this);
@@ -13,21 +18,21 @@ class Specie{
     }
 
     findById(){
-        return db.specie.findById(this.id)
-                .then(specie => specie);
+        return db.user.findById(this.id)
+                .then(user => user);
     }
     
     create(){
-        if (helper.isEmpty(this.specie)) {
-            throw new Error("Specie name is a required field to create");
+        if (helper.isEmpty(this.user)) {
+            throw new Error("User name is a required field to create");
         }
 
         const local = {
-            specie: this.specie
+            user: this.user
         };
 
-        return db.specie.create(local)
-                            .then(newSpecie => newSpecie)
+        return db.user.create(local)
+                            .then(newUser => newUser)
                             .catch(err => {throw err;});
     }
 
@@ -35,18 +40,18 @@ class Specie{
         if (helper.isEmpty(this.id)) {
             throw new Error("Id is a required field to update");
         }
-        else if (helper.isEmpty(this.specie)) {
-            throw new Error("Specie name is a required field to update");
+        else if (helper.isEmpty(this.user)) {
+            throw new Error("User name is a required field to update");
         }
 
         const local = {
             id: this.id,
-            specie: this.specie
+            user: this.user
         };
 
-        return this.findById().then(dbSpecie => {
-            return dbSpecie.update(local)
-                            .then(updatedSpecie => updatedSpecie)
+        return this.findById().then(dbUser => {
+            return dbUser.update(local)
+                            .then(updatedUser => updatedUser)
                             .catch(err => { throw err;});
         });
     }
@@ -60,16 +65,16 @@ class Specie{
             id: this.id
         };
 
-        return this.findById().then(dbSpecie => {
-            return dbSpecie.destroy(local)
+        return this.findById().then(dbUser => {
+            return dbUser.destroy(local)
                             .then(() => {
                                 return {
                                     status: 200,
-                                    message: "Specie Deleted"
+                                    message: "User Deleted"
                                 }
                             }).catch(err => {throw err;});
         });
     }
 }
 
-module.exports = Specie;
+module.exports = User;

@@ -20,10 +20,10 @@ class Breed{
     
     create(){
         if (helper.isEmpty(this.breed)) {
-            throw error("Breed name is a required field to create");
+            throw new Error("Breed name is a required field to create");
         }
         else if (helper.isEmpty(this.specieId)) {
-            throw error("Specie Id is a required field to create");
+            throw new Error("Specie Id is a required field to create");
         }
 
         const local = {
@@ -38,36 +38,36 @@ class Breed{
 
     update(){
         if (helper.isEmpty(this.id)) {
-            throw error("Id is a required field to update");
+            throw new Error("Id is a required field to update");
         }
         else if (helper.isEmpty(this.breed)) {
-            throw error("Breed name is a required field to update");
+            throw new Error("Breed name is a required field to update");
         }
         else if (helper.isEmpty(this.specieId)) {
-            throw error("Specie Id is a required field to update");
+            throw new Error("Specie Id is a required field to update");
         }
 
         const local = {
             id: this.id,
             specieId: this.specieId,
             breed: this.breed
-        }
+        };
 
         return this.findById().then(dbBreed => {
             return dbBreed.update(local)
                             .then(updatedBreed => updatedBreed)
                             .catch(err => { throw err;});
-        })
+        });
     }
 
     delete(){
         if (helper.isEmpty(this.id)) {
-            throw error("Id is a required field to update");
+            throw new Error("Id is a required field to update");
         }
 
         const local = {
             id: this.id
-        }
+        };
 
         return this.findById().then(dbBreed => {
             return dbBreed.destroy(local)
@@ -77,7 +77,7 @@ class Breed{
                                     message: "Breed Deleted"
                                 }
                             }).catch(err => {throw err;});
-        })
+        });
     }
 }
 

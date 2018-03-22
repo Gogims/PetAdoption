@@ -22,6 +22,7 @@ class Main extends React.Component {
         <Route exact path='/ear' component={withEntity(SimpleTable, "ear")}/>
         <Route exact path='/frequency' component={withEntity(SimpleTable, "frequency")}/>
         <Route exact path='/tail' component={withEntity(SimpleTable, "tail")}/>
+        <Route exact path='/role' component={withEntity(SimpleTable, "role")}/>
       </Switch>
     )
   }

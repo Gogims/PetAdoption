@@ -28,7 +28,7 @@ class Ear{
     
     create(){
         if (helper.isEmpty(this.earType)) {
-            throw error("Ear name is a required field to create");
+            throw new Error("Ear name is a required field to create");
         }
 
         const local = {
@@ -42,10 +42,10 @@ class Ear{
 
     update(){
         if (helper.isEmpty(this.id)) {
-            throw error("Id is a required field to update");
+            throw new Error("Id is a required field to update");
         }
         else if (helper.isEmpty(this.earType)) {
-            throw error("Ear name is a required field to update");
+            throw new Error("Ear name is a required field to update");
         }
 
         const local = {
@@ -62,7 +62,7 @@ class Ear{
 
     delete(){
         if (helper.isEmpty(this.id)) {
-            throw error("Id is a required field to update");
+            throw new Error("Id is a required field to update");
         }
 
         const local = {

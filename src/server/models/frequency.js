@@ -19,7 +19,7 @@ class Frequency{
     
     create(){
         if (helper.isEmpty(this.frequency)) {
-            throw error("Frequency name is a required field to create");
+            throw new Error("Frequency name is a required field to create");
         }
 
         const local = {
@@ -33,10 +33,10 @@ class Frequency{
 
     update(){
         if (helper.isEmpty(this.id)) {
-            throw error("Id is a required field to update");
+            throw new Error("Id is a required field to update");
         }
         else if (helper.isEmpty(this.frequency)) {
-            throw error("Frequency name is a required field to update");
+            throw new Error("Frequency name is a required field to update");
         }
 
         const local = {
@@ -53,7 +53,7 @@ class Frequency{
 
     delete(){
         if (helper.isEmpty(this.id)) {
-            throw error("Id is a required field to update");
+            throw new Error("Id is a required field to update");
         }
 
         const local = {
