@@ -1,11 +1,8 @@
 const db = require('../../sequelize/db');
 const { GraphQLObjectType, GraphQLList, GraphQLID } = require('graphql');
-const { resolver, defaultListArgs, attributeFields } = require('graphql-sequelize');
 const colorOutput = require('./colorType');
 const petOutput = require('./petType');
 const ColorPet = require('../../colorPet');
-
-const colorFn = resolver(db.pet.associations.colors);
 
 const colorPetType = new GraphQLObjectType({
     name: 'ColorPet',

@@ -1,11 +1,8 @@
 const db = require('../../sequelize/db');
 const { GraphQLObjectType, GraphQLList, GraphQLID } = require('graphql');
-const { resolver, defaultListArgs, attributeFields } = require('graphql-sequelize');
 const breedOutput = require('./breedType');
 const petOutput = require('./petType');
 const BreedPet = require('../../breedPet');
-
-const breedFn = resolver(db.pet.associations.breeds);
 
 const breedPetType = new GraphQLObjectType({
     name: 'BreedPet',
