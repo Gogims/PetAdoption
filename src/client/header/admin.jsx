@@ -14,7 +14,8 @@ class AdminHeader extends React.Component {
             helper.createDropDownItem("Ear", "/ear"),
             helper.createDropDownItem("Frequency", "/frequency"),
             helper.createDropDownItem("Tail", "/tail"),
-            helper.createDropDownItem("Role", "/role")
+            helper.createDropDownItem("Role", "/role"),
+            helper.createDropDownItem("User", "/userform")
         ];
 
         const dropdown = () => (

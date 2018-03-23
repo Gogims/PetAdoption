@@ -5,6 +5,7 @@ import About from './home/about';
 import Contact from './home/contact';
 import withEntity from './admin/simple/entity';
 import SimpleTable from './admin/simple/table';
+import UserForm from './admin/user/form';
 
 class Main extends React.Component {
   render(){
@@ -23,6 +24,7 @@ class Main extends React.Component {
         <Route exact path='/frequency' component={withEntity(SimpleTable, "frequency")}/>
         <Route exact path='/tail' component={withEntity(SimpleTable, "tail")}/>
         <Route exact path='/role' component={withEntity(SimpleTable, "role")}/>
+        <Route exact path='/userform' component={UserForm}/>
       </Switch>
     )
   }

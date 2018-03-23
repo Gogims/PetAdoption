@@ -57,6 +57,9 @@ module.exports = {
       },
     ],
   },
+  devServer: {
+    historyApiFallback: true
+  },
   // Enable importing JS files without specifying their's extenstion
   //
   // So we can write:

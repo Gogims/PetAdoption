@@ -5,7 +5,7 @@ const myGraphQLSchema = require('./models/graphql/schema');
 const cors = require('cors');
 const port = process.env.PORT || 3000;
 
-let server = express();
+const server = express();
 
 server.use(cors({
     origin: 'http://localhost:8080'
