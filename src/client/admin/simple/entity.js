@@ -1,81 +1,24 @@
 import React from 'react';
 import helper from '../../../helper';
 import { graphql, compose } from 'react-apollo';
-import gql from 'graphql-tag';
+import GraphQLBuilder from '../graphqlBuilder';
 
 function withEntity(TableComponent, entity) {
-    const plural = helper.pluralize(entity);
-    const capitalized = helper.capitalizeWord(entity);
-    
-    function constructQuery() {
-        const query = `
-        query{
-            ` + plural + `{
-              id,
-              ` + entity + `
-            }
-          }
-        `
-
-        return gql(query);
-    }
-
-    function constructCreateMutation() {
-        const mutation = `
-        mutation ($entity: ` + capitalized + `Input!) {
-            create` + capitalized + `(input: $entity) {
-              id,
-              ` + entity + `
-            }
-          }
-        `
-
-        return gql(mutation);
-    }
-
-    function constructUpdateMutation() {
-        const mutation = `
-        mutation ($entity: ` + capitalized + `Input!) {
-            update` + capitalized + `(input: $entity) {
-              id,
-              ` + entity + `
-            }
-          }
-        `
-
-        return gql(mutation);
-    }
-
-    function constructDeleteMutation() {
-        const mutation = `
-        mutation ($entity: ` + capitalized + `Input!) {
-            delete` + capitalized + `(input: $entity) {
-              status,
-              message
-            }
-          }
-        `
-
-        return gql(mutation);
-    }
 
     return class extends React.Component {
         constructor(props) {
             super(props);
-            const plural = helper.pluralize(entity);
 
-            this.state = {
-                entities: plural,
-                entity: entity
-            };
+            this.output = "id, " + entity;
+            this.gqlBuilder = new GraphQLBuilder(entity);
         }
 
         componentWillMount() {
             const ApolloTable = compose(
-                graphql(constructQuery()),
-                graphql(constructCreateMutation(), { name: 'createMutate'}),
-                graphql(constructUpdateMutation(), { name: 'updateMutate'}),
-                graphql(constructDeleteMutation(), { name: 'deleteMutate'})
+                graphql(this.gqlBuilder.query(this.output)),
+                graphql(this.gqlBuilder.createMutation(this.output), { name: 'createMutate'}),
+                graphql(this.gqlBuilder.updateMutation(this.output), { name: 'updateMutate'}),
+                graphql(this.gqlBuilder.deleteMutation(this.output), { name: 'deleteMutate'})
             )(TableComponent);
 
             this.setState({
@@ -85,12 +28,14 @@ function withEntity(TableComponent, entity) {
 
         render() {
             const ApolloTable = this.state.apolloTable;
+            const capitalized = helper.capitalizeWord(entity);
+            const plural = helper.pluralize(entity);
 
             return <ApolloTable
-                entity={this.state.entity}
-                entities={this.state.entities} 
+                entity={entity}
+                entities={plural} 
                 capitalized={capitalized}
-                gqlRead={constructQuery()}
+                gqlRead={this.gqlBuilder.query(this.output)}
                 {...this.props}/>;
         }
     }
