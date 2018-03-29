@@ -31,12 +31,14 @@ function withEntity(TableComponent, entity) {
             const capitalized = helper.capitalizeWord(entity);
             const plural = helper.pluralize(entity);
 
-            return <ApolloTable
-                entity={entity}
-                entities={plural} 
-                capitalized={capitalized}
-                gqlRead={this.gqlBuilder.query(this.output)}
-                {...this.props}/>;
+            return (
+                <ApolloTable
+                    entity={entity}
+                    entities={plural}
+                    capitalized={capitalized}
+                    gqlRead={this.gqlBuilder.query(this.output)}
+                    {...this.props} />
+            );
         }
     }
 }
