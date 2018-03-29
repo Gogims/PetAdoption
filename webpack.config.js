@@ -19,6 +19,7 @@ module.exports = {
   output: {
     path: paths.DIST,
     filename: 'app.bundle.js',
+    publicPath: '/'
   },
   // Tell webpack to use html plugin
   plugins: [
@@ -44,7 +45,19 @@ module.exports = {
       {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract({
-          use: 'css-loader',
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+                options: {
+                    // If you are having trouble with urls not resolving add this setting.
+                    // See https://github.com/webpack-contrib/css-loader#url
+                    url: false,
+                    minimize: true,
+                    sourceMap: true
+                }
+            }
+          ]
         }),
       },
       // File loader for image assets
@@ -58,7 +71,12 @@ module.exports = {
     ],
   },
   devServer: {
-    historyApiFallback: true
+    historyApiFallback: true,
+    noInfo: true,
+    proxy: { // proxy URLs to backend development server
+      '/api': 'http://localhost:3000'
+    },
+    publicPath: '/'
   },
   // Enable importing JS files without specifying their's extenstion
   //

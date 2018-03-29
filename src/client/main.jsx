@@ -24,10 +24,17 @@ class Main extends React.Component {
         <Route exact path='/frequency' component={withEntity(SimpleTable, "frequency")}/>
         <Route exact path='/tail' component={withEntity(SimpleTable, "tail")}/>
         <Route exact path='/role' component={withEntity(SimpleTable, "role")}/>
-        <Route exact path='/userform' component={UserForm}/>
+        <Route path='/userform' component={UForm}/>
       </Switch>
     )
   }
 }
+
+const UForm = () => (
+  <Switch>
+      <Route exact path='/userform' component={UserForm}/>
+      <Route path='/userform/:id' component={UserForm}/>
+  </Switch>
+)
 
 export default Main;
