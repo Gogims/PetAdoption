@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Colors.associate = models => {
-        Colors.belongsToMany(models.pet, {through: 'ColorPet'});
+        Colors.belongsToMany(models.pet, {through: 'colorPet'});
     }
   
     return Colors;
