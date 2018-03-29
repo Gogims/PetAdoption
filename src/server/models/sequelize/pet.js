@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Pets.associate = models => {
-        Pets.belongsToMany(models.breed, {through: 'BreedPet'});
+        Pets.belongsToMany(models.breed, {through: 'breedPet'});
         Pets.belongsTo(models.status, {
             as: 'status',
             foreignKey: "statusId"
@@ -71,7 +71,7 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: "sheddingId"
         });
 
-        Pets.belongsToMany(models.color, {through: 'ColorPet'});
+        Pets.belongsToMany(models.color, {through: 'colorPet'});
         //TODO: add experience and reaction association
     }
   

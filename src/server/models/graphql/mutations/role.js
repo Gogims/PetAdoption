@@ -16,7 +16,7 @@ const roleMutation = {
             }
         },
         resolve: (root, {input}, context) => {
-            const role = new Role(null, input.role, input.userId);
+            const role = new Role(null, input.role);
             return role.create();
         }
     },
@@ -29,7 +29,7 @@ const roleMutation = {
             }
         },
         resolve: (root, {input}, context, info) => {
-            const role = new Role(input.id, input.role, input.userId);
+            const role = new Role(input.id, input.role);
             return role.update();
         }
     },

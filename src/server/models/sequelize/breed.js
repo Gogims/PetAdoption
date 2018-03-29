@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     });
 
-    Breeds.belongsToMany(models.pet, {through: 'BreedPet'});
+    Breeds.belongsToMany(models.pet, {through: 'breedPet'});
   }
 
 

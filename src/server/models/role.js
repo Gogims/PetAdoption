@@ -2,10 +2,9 @@ const db = require('./sequelize/db');
 const helper = require('../../helper');
 
 class Role{
-    constructor(id, role, userId) {
+    constructor(id, role) {
         this.id = id;
         this.role = role;
-        this.userId = userId;
         
         this.findById = this.findById.bind(this);
         this.create = this.create.bind(this);
@@ -39,13 +38,9 @@ class Role{
         else if (helper.isEmpty(this.role)) {
             throw new Error("Role name is a required field to update");
         }
-        else if (helper.isEmpty(this.userId)) {
-            throw new Error("User Id is a required field to update");
-        }
 
         const local = {
             id: this.id,
-            userId: this.userId,
             role: this.role
         }
 
