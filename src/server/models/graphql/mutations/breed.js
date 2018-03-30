@@ -1,9 +1,9 @@
-const breedOutput = require('../outputs/breedType');
+const breedOutput = require('../queries/breedType');
 const breedInput = require('../inputs/breedType');
 const { GraphQLNonNull } = require('graphql');
 const Breed = require('../../breed');
 const { resolver } = require('graphql-sequelize');
-const deletedType = require('../outputs/deleted');
+const deletedType = require('../queries/deleted');
 const db = require('../../sequelize/db');
 
 const breedMutation = {

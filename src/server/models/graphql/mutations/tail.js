@@ -1,9 +1,9 @@
-const tailOutput = require('../outputs/tailType');
+const tailOutput = require('../queries/tailType');
 const tailInput = require('../inputs/tailType');
 const { GraphQLNonNull } = require('graphql');
 const Tail = require('../../tail');
 const { resolver } = require('graphql-sequelize');
-const deletedType = require('../outputs/deleted');
+const deletedType = require('../queries/deleted');
 const db = require('../../sequelize/db');
 
 const tailMutation = {

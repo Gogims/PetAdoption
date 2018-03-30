@@ -1,9 +1,9 @@
-const specieOutput = require('../outputs/specieType');
+const specieOutput = require('../queries/specieType');
 const specieInput = require('../inputs/specieType');
 const { GraphQLNonNull } = require('graphql');
 const Specie = require('../../specie');
 const { resolver } = require('graphql-sequelize');
-const deletedType = require('../outputs/deleted');
+const deletedType = require('../queries/deleted');
 const db = require('../../sequelize/db');
 
 const specieMutation = {

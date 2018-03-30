@@ -1,9 +1,9 @@
-const reactionOutput = require('../outputs/reactionType');
+const reactionOutput = require('../queries/reactionType');
 const reactionInput = require('../inputs/reactionType');
 const { GraphQLNonNull } = require('graphql');
 const Reaction = require('../../reaction');
 const { resolver } = require('graphql-sequelize');
-const deletedType = require('../outputs/deleted');
+const deletedType = require('../queries/deleted');
 const db = require('../../sequelize/db');
 
 const reactionMutation = {

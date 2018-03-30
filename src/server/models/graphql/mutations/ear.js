@@ -1,9 +1,9 @@
-const earOutput = require('../outputs/earType');
+const earOutput = require('../queries/earType');
 const earInput = require('../inputs/earType');
 const { GraphQLNonNull } = require('graphql');
 const Ear = require('../../ear');
 const { resolver } = require('graphql-sequelize');
-const deletedType = require('../outputs/deleted');
+const deletedType = require('../queries/deleted');
 const db = require('../../sequelize/db');
 
 const earMutation = {

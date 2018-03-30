@@ -1,9 +1,9 @@
-const roleOutput = require('../outputs/roleType');
+const roleOutput = require('../queries/roleType');
 const roleInput = require('../inputs/roleType');
 const { GraphQLNonNull } = require('graphql');
 const Role = require('../../role');
 const { resolver } = require('graphql-sequelize');
-const deletedType = require('../outputs/deleted');
+const deletedType = require('../queries/deleted');
 const db = require('../../sequelize/db');
 
 const roleMutation = {

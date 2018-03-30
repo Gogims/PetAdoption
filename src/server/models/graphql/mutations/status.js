@@ -1,9 +1,9 @@
-const statusOutput = require('../outputs/statusType');
+const statusOutput = require('../queries/statusType');
 const statusInput = require('../inputs/statusType');
 const { GraphQLNonNull } = require('graphql');
 const Status = require('../../status');
 const { resolver } = require('graphql-sequelize');
-const deletedType = require('../outputs/deleted');
+const deletedType = require('../queries/deleted');
 const db = require('../../sequelize/db');
 
 const statusMutation = {

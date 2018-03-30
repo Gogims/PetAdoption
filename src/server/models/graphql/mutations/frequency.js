@@ -1,9 +1,9 @@
-const frequencyOutput = require('../outputs/frequencyType');
+const frequencyOutput = require('../queries/frequencyType');
 const frequencyInput = require('../inputs/frequencyType');
 const { GraphQLNonNull } = require('graphql');
 const Frequency = require('../../frequency');
 const { resolver } = require('graphql-sequelize');
-const deletedType = require('../outputs/deleted');
+const deletedType = require('../queries/deleted');
 const db = require('../../sequelize/db');
 
 const frequencyMutation = {

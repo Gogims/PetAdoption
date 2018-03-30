@@ -1,9 +1,9 @@
-const colorOutput = require('../outputs/colorType');
+const colorOutput = require('../queries/colorType');
 const colorInput = require('../inputs/colorType');
 const { GraphQLNonNull } = require('graphql');
 const Color = require('../../color');
 const { resolver } = require('graphql-sequelize');
-const deletedType = require('../outputs/deleted');
+const deletedType = require('../queries/deleted');
 const db = require('../../sequelize/db');
 
 const colorMutation = {

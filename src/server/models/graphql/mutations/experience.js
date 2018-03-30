@@ -1,9 +1,9 @@
-const experienceOutput = require('../outputs/experienceType');
+const experienceOutput = require('../queries/experienceType');
 const experienceInput = require('../inputs/experienceType');
 const { GraphQLNonNull } = require('graphql');
 const Experience = require('../../experience');
 const { resolver } = require('graphql-sequelize');
-const deletedType = require('../outputs/deleted');
+const deletedType = require('../queries/deleted');
 const db = require('../../sequelize/db');
 
 const experienceMutation = {

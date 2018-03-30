@@ -1,9 +1,9 @@
-const userOutput = require('../outputs/userType');
+const userOutput = require('../queries/userType');
 const userInput = require('../inputs/userType');
 const { GraphQLNonNull } = require('graphql');
 const User = require('../../user');
 const { resolver } = require('graphql-sequelize');
-const deletedType = require('../outputs/deleted');
+const deletedType = require('../queries/deleted');
 const db = require('../../sequelize/db');
 
 const userMutation = {
