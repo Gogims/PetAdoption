@@ -4,6 +4,7 @@ const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const myGraphQLSchema = require('./models/graphql/schema');
 const cors = require('cors');
 const port = process.env.PORT || 3000;
+const db = require('./models/sequelize/db');
 
 const server = express();
 
@@ -13,7 +14,10 @@ server.use(cors({
 
 // The GraphQL endpoint
 server.use('/graphql', bodyParser.json(), graphqlExpress({
-    schema: myGraphQLSchema
+    schema: myGraphQLSchema,
+    context: {
+        db
+    }
 }));
 
 // GraphiQL, a visual editor for queries

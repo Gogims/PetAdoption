@@ -1,4 +1,3 @@
-const db = require('../../sequelize/db');
 const { GraphQLObjectType, GraphQLList, GraphQLID } = require('graphql');
 const colorOutput = require('./colorType');
 const petOutput = require('./petType');
@@ -10,14 +9,14 @@ const colorPetType = new GraphQLObjectType({
     fields: {
         pets: {
             type: petOutput.type,
-            resolve: (colorPet, args) => {
-                return db.pet.findById(colorPet.petId);
+            resolve: (colorPet, args, context) => {
+                return context.db.pet.findById(colorPet.petId);
             }
         },
         colors: {
             type: colorOutput.type,
-            resolve: (colorPet, args) => {
-                return db.color.findById(colorPet.colorId);
+            resolve: (colorPet, args, context) => {
+                return context.db.color.findById(colorPet.colorId);
             }
         }
     }
@@ -27,7 +26,7 @@ const colorPetType = new GraphQLObjectType({
     type: colorPetType,
     schema: {
       type: new GraphQLList(colorPetType),
-      resolve: (_, args, context) => {
+      resolve: (_, args) => {
         const colorPet = new ColorPet(args);
         return colorPet.findAll();
       },

@@ -1,4 +1,3 @@
-const db = require('../../sequelize/db');
 const { GraphQLObjectType, GraphQLList, GraphQLID } = require('graphql');
 const breedOutput = require('./breedType');
 const petOutput = require('./petType');
@@ -10,14 +9,14 @@ const breedPetType = new GraphQLObjectType({
     fields: {
         pets: {
             type: petOutput.type,
-            resolve: (breedPet, args) => {
-                return db.pet.findById(breedPet.petId);
+            resolve: (breedPet, args, context) => {
+                return context.db.pet.findById(breedPet.petId);
             }
         },
         breeds: {
             type: breedOutput.type,
-            resolve: (breedPet, args) => {
-                return db.breed.findById(breedPet.breedId);
+            resolve: (breedPet, args, context) => {
+                return context.db.breed.findById(breedPet.breedId);
             }
         }
     }

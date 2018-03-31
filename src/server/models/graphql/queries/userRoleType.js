@@ -1,4 +1,3 @@
-const db = require('../../sequelize/db');
 const { GraphQLObjectType, GraphQLList, GraphQLID } = require('graphql');
 const userOutput = require('./userType');
 const roleOutput = require('./roleType');
@@ -10,14 +9,14 @@ const userRoleType = new GraphQLObjectType({
     fields: {
         roles: {
             type: roleOutput.type,
-            resolve: (userRole, args) => {
-                return db.role.findById(userRole.roleId);
+            resolve: (userRole, args, context) => {
+                return context.db.role.findById(userRole.roleId);
             }
         },
         users: {
             type: userOutput.type,
             resolve: (userRole, args) => {
-                return db.user.findById(userRole.userId);
+                return context.db.user.findById(userRole.userId);
             }
         }
     }
