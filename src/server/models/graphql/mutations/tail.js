@@ -1,14 +1,14 @@
-const tailOutput = require('../queries/tailType');
-const tailInput = require('../inputs/tailType');
+const tailType = require('../types/tail');
+const tailInput = require('../types/inputs/tail');
 const { GraphQLNonNull } = require('graphql');
 const Tail = require('../../tail');
 const { resolver } = require('graphql-sequelize');
-const deletedType = require('../queries/deleted');
+const deletedType = require('../types/deleted');
 const db = require('../../sequelize/db');
 
 const tailMutation = {
     createTail: {
-        type:  tailOutput.type,
+        type:  tailType,
         description: "Creates a new tail",
         args:{
             input: {
@@ -21,7 +21,7 @@ const tailMutation = {
         }
     },
     updateTail: {
-        type: tailOutput.type,
+        type: tailType,
         description: "Updates an existing tail",
         args:{
             input:{

@@ -1,14 +1,14 @@
-const specieOutput = require('../queries/specieType');
-const specieInput = require('../inputs/specieType');
+const speciaType = require('../types/specie');
+const specieInput = require('../types/inputs/specie');
 const { GraphQLNonNull } = require('graphql');
 const Specie = require('../../specie');
 const { resolver } = require('graphql-sequelize');
-const deletedType = require('../queries/deleted');
+const deletedType = require('../types/deleted');
 const db = require('../../sequelize/db');
 
 const specieMutation = {
     createSpecie: {
-        type:  specieOutput.type,
+        type:  speciaType,
         description: "Creates a new specie",
         args:{
             input: {
@@ -21,7 +21,7 @@ const specieMutation = {
         }
     },
     updateSpecie: {
-        type: specieOutput.type,
+        type: speciaType,
         description: "Updates an existing specie",
         args:{
             input:{

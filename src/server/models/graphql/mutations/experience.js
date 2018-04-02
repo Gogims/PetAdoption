@@ -1,14 +1,14 @@
-const experienceOutput = require('../queries/experienceType');
-const experienceInput = require('../inputs/experienceType');
+const experienceType = require('../types/experience');
+const experienceInput = require('../types/inputs/experience');
 const { GraphQLNonNull } = require('graphql');
 const Experience = require('../../experience');
 const { resolver } = require('graphql-sequelize');
-const deletedType = require('../queries/deleted');
+const deletedType = require('../types/deleted');
 const db = require('../../sequelize/db');
 
 const experienceMutation = {
     createExperience: {
-        type:  experienceOutput.type,
+        type:  experienceType,
         description: "Creates a new experience",
         args:{
             input: {
@@ -21,7 +21,7 @@ const experienceMutation = {
         }
     },
     updateExperience: {
-        type: experienceOutput.type,
+        type: experienceType,
         description: "Updates an existing experience",
         args:{
             input:{

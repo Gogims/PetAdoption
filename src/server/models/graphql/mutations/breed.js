@@ -1,14 +1,14 @@
-const breedOutput = require('../queries/breedType');
-const breedInput = require('../inputs/breedType');
+const breedType = require('../types/breed');
+const breedInput = require('../types/inputs/breed');
 const { GraphQLNonNull } = require('graphql');
 const Breed = require('../../breed');
 const { resolver } = require('graphql-sequelize');
-const deletedType = require('../queries/deleted');
+const deletedType = require('../types/deleted');
 const db = require('../../sequelize/db');
 
 const breedMutation = {
     createBreed: {
-        type:  breedOutput.type,
+        type:  breedType,
         description: "Creates a new breed",
         args:{
             input: {
@@ -21,7 +21,7 @@ const breedMutation = {
         }
     },
     updateBreed: {
-        type: breedOutput.type,
+        type: breedType,
         description: "Updates an existing breed",
         args:{
             input:{

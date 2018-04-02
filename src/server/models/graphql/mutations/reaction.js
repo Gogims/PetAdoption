@@ -1,14 +1,14 @@
-const reactionOutput = require('../queries/reactionType');
-const reactionInput = require('../inputs/reactionType');
+const reactionType = require('../types/reaction');
+const reactionInput = require('../types/inputs/reaction');
 const { GraphQLNonNull } = require('graphql');
 const Reaction = require('../../reaction');
 const { resolver } = require('graphql-sequelize');
-const deletedType = require('../queries/deleted');
+const deletedType = require('../types/deleted');
 const db = require('../../sequelize/db');
 
 const reactionMutation = {
     createReaction: {
-        type:  reactionOutput.type,
+        type:  reactionType,
         description: "Creates a new reaction",
         args:{
             input: {
@@ -21,7 +21,7 @@ const reactionMutation = {
         }
     },
     updateReaction: {
-        type: reactionOutput.type,
+        type: reactionType,
         description: "Updates an existing reaction",
         args:{
             input:{
