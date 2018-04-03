@@ -1,11 +1,10 @@
-const db = require('../../sequelize/db');
+const db = require('../../../sequelize/db');
 const { GraphQLList } = require('graphql');
 const { resolver, defaultListArgs } = require('graphql-sequelize');
-const helper = require('../../../../helper');
-const experienceType = require('../types/experience');
+const helper = require('../../../../../helper');
+const experienceType = require('../../types/experience');
 
 module.exports = {
-  type: experienceType,
   schema: {
     type: new GraphQLList(experienceType),
     resolve: resolver(db.experience, {

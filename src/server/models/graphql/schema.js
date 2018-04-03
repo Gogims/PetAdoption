@@ -4,12 +4,24 @@ const path = require('path');
 const helper = require('../../../helper');
 
 let schemaList = new Object();
+const queryListPath = path.join(__dirname, 'queries', 'list');
+
+fs.readdirSync(queryListPath)
+.forEach(file => {
+  const query = require(path.join(queryListPath, file));
+  const propertyName = helper.pluralize(file.slice(0, -3));
+  Object.assign(schemaList, {
+      [propertyName]: query.schema
+    });
+});
+
 const queryPath = path.join(__dirname, 'queries');
 
 fs.readdirSync(queryPath)
+.filter(file => file != "list")
 .forEach(file => {
   const query = require(path.join(queryPath, file));
-  const propertyName = helper.pluralize(file.slice(0, -3));
+  const propertyName = file.slice(0, -3);
   Object.assign(schemaList, {
       [propertyName]: query.schema
     });

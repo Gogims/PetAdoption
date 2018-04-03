@@ -1,10 +1,9 @@
-const db = require('../../sequelize/db');
+const db = require('../../../sequelize/db');
 const { GraphQLList } = require('graphql');
 const { resolver, defaultListArgs } = require('graphql-sequelize');
-const colorType = require('../types/color');
+const colorType = require('../../types/color');
 
 module.exports = {
-  type: colorType,
   schema: {
     type: new GraphQLList(colorType),
     resolve: resolver(db.color, {

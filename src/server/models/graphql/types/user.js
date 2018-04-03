@@ -11,7 +11,9 @@ module.exports = new GraphQLObjectType({
     return Object.assign({}, attributeFields(db.user), {
       roles: {
         type: new GraphQLList(roleType),
-        //resolve: resolver(db.user.associations.roles)
+        resolve: (user, args, context, info) => {
+          return user.getRoles();
+        }
       }
     })
   }

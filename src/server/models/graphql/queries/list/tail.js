@@ -1,11 +1,10 @@
-const db = require('../../sequelize/db');
+const db = require('../../../sequelize/db');
 const { GraphQLList } = require('graphql');
 const { resolver, defaultListArgs } = require('graphql-sequelize');
-const helper = require('../../../../helper');
-const tailType = require('../types/tail');
+const helper = require('../../../../../helper');
+const tailType = require('../../types/tail');
 
 module.exports = {
-  type: tailType,
   schema: {
     type: new GraphQLList(tailType),
     resolve: resolver(db.tail, {

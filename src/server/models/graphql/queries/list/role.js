@@ -1,10 +1,9 @@
-const db = require('../../sequelize/db');
+const db = require('../../../sequelize/db');
 const { GraphQLList } = require('graphql');
 const { resolver, defaultListArgs } = require('graphql-sequelize');
-const roleType = require('../types/role');
+const roleType = require('../../types/role');
 
 module.exports = {
-  type: roleType,
   schema: {
     type: new GraphQLList(roleType),
     resolve: resolver(db.role),

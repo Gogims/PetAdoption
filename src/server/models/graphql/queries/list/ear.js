@@ -1,11 +1,10 @@
-const db = require('../../sequelize/db');
+const db = require('../../../sequelize/db');
 const { GraphQLList } = require('graphql');
 const { resolver, defaultListArgs } = require('graphql-sequelize');
-const helper = require('../../../../helper');
-const earType = require('../types/ear');
+const helper = require('../../../../../helper');
+const earType = require('../../types/ear');
 
 module.exports = {
-  type: earType,
   schema: {
     type: new GraphQLList(earType),
     resolve: resolver(db.ear, {
