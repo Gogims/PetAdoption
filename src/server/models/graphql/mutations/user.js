@@ -16,7 +16,7 @@ const userMutation = {
             }
         },
         resolve: (root, {input}, context) => {
-            const user = new User(null, input);
+            const user = new User(input);
             return user.create();
         }
     },
@@ -29,7 +29,7 @@ const userMutation = {
             }
         },
         resolve: (root, {input}, context, info) => {
-            const user = new User(input.id, input);
+            const user = new User(input);
             return user.update();
         }
     },
@@ -42,7 +42,7 @@ const userMutation = {
             }
         },
         resolve: (root, {input}, context) => {
-            const user = new User(input.id);
+            const user = new User(input);
             return user.delete();
         }
     }

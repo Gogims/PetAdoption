@@ -1,15 +1,10 @@
 const db = require('./sequelize/db');
 const helper = require('../../helper');
+const Promise = require('bluebird');
 
 class User{
-    constructor(id, user) {
-        this.id = id;
-        this.userName = user.userName;
-        this.password = user.password;
-        this.email = user.email;
-        this.firstName = user.firstName;
-        this.lastName = user.lastName;
-        this.zipcode = user.zipcode;
+    constructor(user) {
+        Object.assign(this, user);
         
         this.findById = this.findById.bind(this);
         this.create = this.create.bind(this);
@@ -17,8 +12,12 @@ class User{
         this.delete = this.delete.bind(this);
     }
 
-    findById(){
-        return db.user.findById(this.id)
+    findById(roles){
+        const eagerLoadRoles = !roles ? 
+        null :
+        { include: [{ model: db.role }] };
+
+        return db.user.findById(this.id, eagerLoadRoles)
                 .then(user => user);
     }
     
@@ -40,19 +39,26 @@ class User{
         if (helper.isEmpty(this.id)) {
             throw new Error("Id is a required field to update");
         }
-        else if (helper.isEmpty(this.user)) {
-            throw new Error("User name is a required field to update");
-        }
 
-        const local = {
-            id: this.id,
-            user: this.user
-        };
+        const local = Object.assign({}, this);
+        delete local.id;
+        delete local.roles;
 
-        return this.findById().then(dbUser => {
-            return dbUser.update(local)
-                            .then(updatedUser => updatedUser)
-                            .catch(err => { throw err;});
+        return this.findById(true).then(dbUser => {
+
+            const updatePromise = dbUser.update(local)
+                            .then(updatedUser => updatedUser);
+
+            const roleIds = this.roles.map(role => role.id);
+
+            const rolePromise = dbUser.setRoles(roleIds)
+                            .then(roles => roles);
+
+            return Promise.all([updatePromise, rolePromise])
+                    .then(promises => {
+                        return promises[0];
+                    })
+                    .catch(err => {throw err; });
         });
     }
 

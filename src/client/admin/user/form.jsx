@@ -9,18 +9,9 @@ class UserForm extends React.Component {
     constructor(props) {
         super(props);
         const user = props.user;
-        const roles = user.roles.map(role => role.roles);
 
         //TODO: Use object spread
-        this.state = {
-            firstName: user.firstName,
-            lastName: user.lastName,
-            userName: user.userName,
-            password: user.password,
-            email: user.email,
-            zipcode: user.zipcode,
-            roles: roles
-        };
+        this.state = Object.assign({}, user);
 
         this.handleRole = this.handleRole.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -54,7 +45,24 @@ class UserForm extends React.Component {
     }
 
     saveUser() {
-        console.log(this.state);
+        if (this.props.isEdit) {
+            this.props.updateMutate({
+                variables: {
+                    entity: this.state
+                }
+            })
+            .then(({ data }) => console.log(data))
+            .catch(error => console.log(error));
+        }
+        else {
+            this.props.createMutate({
+                variables: {
+                    user: this.state
+                }
+            })
+            .then(({ data }) => console.log(data))
+            .catch(error => console.log(error));
+        }
     }
 
     render() {
@@ -128,45 +136,38 @@ class UserForm extends React.Component {
     }
 }
 
-const apollo = ({user, roles, createMutate, updateMutate, isEdit}) => {
+const apollo = ({query, createMutate, updateMutate, isEdit}) => {
     if (isEdit) {
-        if (user.loading || roles.loading) {
+        if (query.loading) {
             return null;
         }
         // TODO: Better error handling
-        else if (user.error || roles.error) {
-            console.log(roles.error);
-            console.log(user.error);
+        else if (query.error) {
+            console.log(query.error);
         }
     }
-    
-    const initRoles = isEdit ? roles.userRoles : [];
-    const initUser = isEdit ? user.users[0] : {};
-    const userRoles = Object.assign({}, initUser, {roles: initRoles});
 
-    return (<UserForm user={userRoles} isEdit={isEdit}/>)
+    const user = isEdit ? query.user : {};
+
+    return (<UserForm user={user} isEdit={isEdit} 
+                createMutate={createMutate} updateMutate={updateMutate}/>)
 }
 
 const route = (props) => {
     //props.match.params.id
-    const output = 'id, userName, password, email, firstName, lastName, zipcode';
+    const output = `id, userName, password, email, firstName, lastName, zipcode, 
+        roles {
+            id,
+            role
+        }`;
     const isEdit = !helper.isEmpty(props.match.params.id);
-    const gqlBuilder = new GraphQLBuilder('user', [{
-        field: "id",
-        value: props.match.params.id
-    }]);
+    const gqlBuilder = new GraphQLBuilder('user');
     let Composed;
 
     if (isEdit) {
-        const jointBuilder = new GraphQLBuilder('userRole');
-        const jointOutput = `
-        roles {
-            id, role
-        }`;
 
         Composed = compose(
-            graphql(gqlBuilder.query(output), { name: 'user' }),
-            graphql(jointBuilder.query(jointOutput), { name: 'roles' }),
+            graphql(gqlBuilder.getEntity(props.match.params.id, output), { name: 'query' }),
             graphql(gqlBuilder.createMutation(output), { name: 'createMutate' }),
             graphql(gqlBuilder.updateMutation(output), { name: 'updateMutate' })
         )(apollo);

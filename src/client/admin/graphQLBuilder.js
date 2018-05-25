@@ -12,6 +12,7 @@ class GraphQLBuilder {
         this.createMutation = this.createMutation.bind(this);
         this.updateMutation = this.updateMutation.bind(this);
         this.deleteMutation = this.deleteMutation.bind(this);
+        this.getEntity = this.getEntity.bind(this);
     }
 
     query(output) {
@@ -26,48 +27,55 @@ class GraphQLBuilder {
 
       const query = `
       query {
-          ` + this.plural + where + `{
-            ` + output + `
-          }
+        ${ this.plural + where } {
+          ${ output }
         }
-      `
+      }`
+
+      return gql(query);
+    }
+
+    getEntity(id, output) {
+      const query = `
+      query {
+        ${this.entity}(id: ${id}) {
+          ${ output}
+        }
+      }`
 
       return gql(query);
     }
 
     createMutation(output) {
         const mutation = `
-        mutation ($entity: ` + this.capitalize + `Input!) {
-            create` + this.capitalize + `(input: $entity) {
-              ` + output + `
-            }
+        mutation ($entity: ${ this.capitalize }Input!) {
+          create${ this.capitalize } (input: $entity) {
+            ${output}
           }
-        `
+        }`
 
         return gql(mutation);
     }
 
     updateMutation(output) {
         const mutation = `
-        mutation ($entity: ` + this.capitalize + `Input!) {
-            update` + this.capitalize + `(input: $entity) {
-              ` + output + `
-            }
+        mutation ($entity: ${ this.capitalize }Input!) {
+          update${ this.capitalize }(input: $entity) {
+            ${ output }
           }
-        `
+        }`
 
         return gql(mutation);
     }
 
     deleteMutation() {
         const mutation = `
-        mutation ($entity: ` + this.capitalize + `Input!) {
-            delete` + this.capitalize + `(input: $entity) {
-              status,
-              message
-            }
+        mutation ($entity: ${ this.capitalize }Input!) {
+          delete${ this.capitalize }(input: $entity) {
+            status,
+            message
           }
-        `
+        }`
 
         return gql(mutation);
     }
