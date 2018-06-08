@@ -39,7 +39,7 @@ const AdminArea = ({ match }) => {
       { adminEntity('tail') }
       { adminEntity('role') }
       <Route exact path={`${ match.url }/users`} component={ UserList } />
-      <Route exact path={`${ match.url }/user/:id`} component={ UserForm } />
+      <Route exact path={`${ match.url }/user/:id?`} component={ UserForm } />
     </Switch>
   )
 }

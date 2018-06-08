@@ -8,9 +8,11 @@ module.exports = new GraphQLInputObjectType({
     fields: () => {
         const roleInputType = require('./role');
 
-        return Object.assign({}, attributeFields(db.user, {
-            allowNull: true
-        }), {
+        return Object.assign({},
+            attributeFields(db.user, {
+                allowNull: true
+            }),
+            {
                 roles: {
                     type: new GraphQLList(roleInputType)
                 }

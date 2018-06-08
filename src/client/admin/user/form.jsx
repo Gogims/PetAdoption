@@ -8,10 +8,13 @@ import helper from '../../../helper';
 class UserForm extends React.Component {
     constructor(props) {
         super(props);
-        const user = props.user;
+        let user = Object.assign({}, props.user);
 
-        //TODO: Use object spread
-        this.state = Object.assign({}, user);
+        for(let key in user) {
+            user[key] = !user[key] ? "" : user[key];
+        }
+
+        this.state = user;
 
         this.handleRole = this.handleRole.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -45,10 +48,16 @@ class UserForm extends React.Component {
     }
 
     saveUser() {
+        const user = Object.assign({}, this.state);
+        for (let prop in user) {
+            user[prop] = user[prop] === "" ? null : user[prop];
+        }
+        console.log(user);
+
         if (this.props.isEdit) {
             this.props.updateMutate({
                 variables: {
-                    entity: this.state
+                    entity: user
                 }
             })
             .then(({ data }) => console.log(data))
@@ -57,7 +66,7 @@ class UserForm extends React.Component {
         else {
             this.props.createMutate({
                 variables: {
-                    user: this.state
+                    user: user
                 }
             })
             .then(({ data }) => console.log(data))
@@ -70,7 +79,7 @@ class UserForm extends React.Component {
         const iconButton = this.props.isEdit ? "edit" : "add";
 
         return (
-            <Form>
+            <Form onSubmit={this.saveUser}>
                 <Form.Group widths='equal'>
                     <Form.Input label='First Name'
                         placeholder='First Name'
@@ -78,6 +87,7 @@ class UserForm extends React.Component {
                         onChange={this.handleInputChange.bind(this, "firstName")}
                     />
                     <Form.Input
+                        required
                         label='Last Name'
                         placeholder='Last Name'
                         value={this.state.lastName}
@@ -85,13 +95,17 @@ class UserForm extends React.Component {
                     />
                 </Form.Group>
                 <Form.Group widths='equal'>
-                    <Form.Input fluid
+                    <Form.Input 
+                        required
+                        fluid
                         label='User Name'
                         placeholder='User Name'
                         value={this.state.userName}
                         onChange={this.handleInputChange.bind(this, "userName")}
                     />
-                    <Form.Input fluid
+                    <Form.Input 
+                        required
+                        fluid
                         label='Password'
                         placeholder='Password'
                         type='password'
@@ -100,13 +114,16 @@ class UserForm extends React.Component {
                     />
                 </Form.Group>
                 <Form.Group widths='equal'>
-                    <Form.Input fluid
+                    <Form.Input 
+                        required
+                        fluid
                         label='Email'
                         placeholder='Email'
                         value={this.state.email}
                         onChange={this.handleInputChange.bind(this, "email")}
                     />
-                    <Form.Input fluid
+                    <Form.Input 
+                        fluid
                         label='Zip Code'
                         placeholder='Zip Code'
                         value={this.state.zipcode}
@@ -127,8 +144,7 @@ class UserForm extends React.Component {
                     icon
                     labelPosition='left'
                     size='medium'
-                    color={colorButton}
-                    onClick={this.saveUser}>
+                    color={colorButton}>
                     <Icon name={iconButton} /> User
                 </Button>
             </Form>
