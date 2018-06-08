@@ -7,6 +7,7 @@ let schemaList = new Object();
 const queryListPath = path.join(__dirname, 'queries', 'list');
 
 fs.readdirSync(queryListPath)
+.filter(file => file != "pagination.js")
 .forEach(file => {
   const query = require(path.join(queryListPath, file));
   const propertyName = helper.pluralize(file.slice(0, -3));

@@ -12,7 +12,11 @@ module.exports = new GraphQLObjectType({
       roles: {
         type: new GraphQLList(roleType),
         resolve: (user, args, context, info) => {
-          return user.getRoles();
+          if (!user.roles) {
+            return user.getRoles();
+          }
+
+          return user.roles;
         }
       }
     })
