@@ -1,7 +1,7 @@
 import React from 'react';
 import helper from '../../../helper';
 import { graphql, compose } from 'react-apollo';
-import GraphQLBuilder from '../graphqlBuilder';
+import GraphQLBuilder from '../graphQLBuilder';
 
 function withEntity(TableComponent, entity) {
 

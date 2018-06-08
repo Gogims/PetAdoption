@@ -5,17 +5,18 @@ import { Route } from 'react-router-dom';
 
 class AdminHeader extends React.Component {
     render(){
+        const urlPath = suffix => `/${this.props.prefix}/${suffix}`;
+
         const items = [
-            helper.createDropDownItem("Specie", "/specie"),
-            helper.createDropDownItem("Color", "/color"),
-            helper.createDropDownItem("Experience", "/experience"),
-            helper.createDropDownItem("Reaction", "/reaction"),
-            helper.createDropDownItem("Status", "/status"),
-            helper.createDropDownItem("Ear", "/ear"),
-            helper.createDropDownItem("Frequency", "/frequency"),
-            helper.createDropDownItem("Tail", "/tail"),
-            helper.createDropDownItem("Role", "/role"),
-            helper.createDropDownItem("User", "/userform")
+            helper.createDropDownItem("Species",  urlPath('specie')),
+            helper.createDropDownItem("Colors", urlPath('color')),
+            helper.createDropDownItem("Experiences", urlPath('experience')),
+            helper.createDropDownItem("Reactions", urlPath('reaction')),
+            helper.createDropDownItem("Status", urlPath('status')),
+            helper.createDropDownItem("Ears", urlPath('ear')),
+            helper.createDropDownItem("Frequencies", urlPath('frequency')),
+            helper.createDropDownItem("Tails", urlPath('tail')),
+            helper.createDropDownItem("Users", urlPath('users'))
         ];
 
         const dropdown = () => (

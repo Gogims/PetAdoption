@@ -13,7 +13,7 @@ class Header extends React.Component{
                 <HomeMenu/>
                 <FeatureMenu/>
                 <AnimalMenu/>
-                <AdminMenu/>
+                <AdminMenu prefix="admin" />
             </Menu>
         );
     }

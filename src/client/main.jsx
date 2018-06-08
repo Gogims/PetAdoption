@@ -6,35 +6,42 @@ import Contact from './home/contact';
 import withEntity from './admin/simple/entity';
 import SimpleTable from './admin/simple/table';
 import UserForm from './admin/user/form';
+import UserList from './admin/user/list';
 
 class Main extends React.Component {
   render(){
 
     return (
       <Switch>
-        <Route exact path='/' component={Home}/>
-        <Route exact path='/about' component={About}/>
-        <Route exact path='/contact' component={Contact}/>
-        <Route exact path='/specie' component={withEntity(SimpleTable, "specie")}/>
-        <Route exact path='/color' component={withEntity(SimpleTable, "color")}/>
-        <Route exact path='/experience' component={withEntity(SimpleTable, "experience")}/>
-        <Route exact path='/reaction' component={withEntity(SimpleTable, "reaction")}/>
-        <Route exact path='/status' component={withEntity(SimpleTable, "status")}/>
-        <Route exact path='/ear' component={withEntity(SimpleTable, "ear")}/>
-        <Route exact path='/frequency' component={withEntity(SimpleTable, "frequency")}/>
-        <Route exact path='/tail' component={withEntity(SimpleTable, "tail")}/>
-        <Route exact path='/role' component={withEntity(SimpleTable, "role")}/>
-        <Route path='/userform' component={UForm}/>
+        <Route exact path='/' component={ Home } />
+        <Route exact path='/about' component={ About } />
+        <Route exact path='/contact' component={ Contact } />
+        <Route path='/admin' component={ AdminArea } />
       </Switch>
     )
   }
 }
 
-const UForm = () => (
-  <Switch>
-      <Route exact path='/userform' component={UserForm}/>
-      <Route path='/userform/:id' component={UserForm}/>
-  </Switch>
-)
+const AdminArea = ({ match }) => {
+  const adminEntity = (entity) => (
+    <Route exact path={`${ match.url }/${ entity }`} component={ withEntity(SimpleTable, entity) } />
+  );
+
+  return (
+    <Switch>
+      { adminEntity('specie') }
+      { adminEntity('color') }
+      { adminEntity('experience') }
+      { adminEntity('reaction') }
+      { adminEntity('status') }
+      { adminEntity('ear') }
+      { adminEntity('frequency') }
+      { adminEntity('tail') }
+      { adminEntity('role') }
+      <Route exact path={`${ match.url }/users`} component={ UserList } />
+      <Route exact path={`${ match.url }/user/:id`} component={ UserForm } />
+    </Switch>
+  )
+}
 
 export default Main;

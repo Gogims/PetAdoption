@@ -9,3 +9,7 @@ html{
 .mainContent{
   margin-top: 41px;
 }
+
+.clickable {
+  cursor: pointer;
+}

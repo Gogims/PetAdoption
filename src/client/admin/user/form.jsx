@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Button, Icon, Header, Segment } from 'semantic-ui-react';
 import { graphql, compose } from 'react-apollo';
 import RoleList from './roleList';
-import GraphQLBuilder from '../graphqlBuilder';
+import GraphQLBuilder from '../graphQLBuilder';
 import helper from '../../../helper';
 
 class UserForm extends React.Component {

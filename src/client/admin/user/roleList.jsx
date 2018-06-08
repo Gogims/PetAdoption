@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form } from 'semantic-ui-react';
 import { graphql, compose } from 'react-apollo';
-import GraphQLBuilder from '../graphqlBuilder';
+import GraphQLBuilder from '../graphQLBuilder';
 import helper from '../../../helper';
 
 class RoleList extends React.Component {
