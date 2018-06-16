@@ -1,27 +1,29 @@
 const db = require('./sequelize/db');
 const helper = require('../../helper');
 const Promise = require('bluebird');
+const { Op } = require('sequelize');
 
-class User{
+class User {
     constructor(user) {
         Object.assign(this, user);
-        
+
         this.findById = this.findById.bind(this);
         this.create = this.create.bind(this);
         this.update = this.update.bind(this);
         this.delete = this.delete.bind(this);
+        this.verify = this.verify.bind(this);
     }
 
-    findById(roles){
-        const eagerLoadRoles = !roles ? 
-        null :
-        { include: [{ model: db.role }] };
+    findById(roles) {
+        const eagerLoadRoles = !roles ?
+            null :
+            { include: [{ model: db.role }] };
 
         return db.user.findById(this.id, eagerLoadRoles)
-                .then(user => user);
+            .then(user => user);
     }
-    
-    create(){
+
+    create() {
         if (helper.isEmpty(this.user)) {
             throw new Error("User name is a required field to create");
         }
@@ -31,11 +33,11 @@ class User{
         };
 
         return db.user.create(local)
-                            .then(newUser => newUser)
-                            .catch(err => {throw err;});
+            .then(newUser => newUser)
+            .catch(err => { throw err; });
     }
 
-    update(){
+    update() {
         if (helper.isEmpty(this.id)) {
             throw new Error("Id is a required field to update");
         }
@@ -47,22 +49,22 @@ class User{
         return this.findById(true).then(dbUser => {
 
             const updatePromise = dbUser.update(local)
-                            .then(updatedUser => updatedUser);
+                .then(updatedUser => updatedUser);
 
             const roleIds = this.roles.map(role => role.id);
 
             const rolePromise = dbUser.setRoles(roleIds)
-                            .then(roles => roles);
+                .then(roles => roles);
 
             return Promise.all([updatePromise, rolePromise])
-                    .then(promises => {
-                        return promises[0];
-                    })
-                    .catch(err => {throw err; });
+                .then(promises => {
+                    return promises[0];
+                })
+                .catch(err => { throw err; });
         });
     }
 
-    delete(){
+    delete() {
         if (helper.isEmpty(this.id)) {
             throw new Error("Id is a required field to update");
         }
@@ -73,13 +75,32 @@ class User{
 
         return this.findById().then(dbUser => {
             return dbUser.destroy(local)
-                            .then(() => {
-                                return {
-                                    status: 200,
-                                    message: "User Deleted"
-                                }
-                            }).catch(err => {throw err;});
+                .then(() => {
+                    return {
+                        status: 200,
+                        message: "User Deleted"
+                    }
+                }).catch(err => { throw err; });
         });
+    }
+
+    verify() {
+        return db.user.find({
+            where: {
+                [Op.and]: [
+                    {
+                        userName: {
+                            [Op.eq]: this.userName
+                        }
+                    },
+                    {
+                        password: {
+                            [Op.eq]: this.password
+                        }
+                    }
+                ]
+            }
+        }).then(user => !user ? null : user.dataValues);
     }
 }
 
