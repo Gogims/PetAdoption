@@ -2,9 +2,9 @@ const statusType = require('../types/status');
 const statusInput = require('../types/inputs/status');
 const { GraphQLNonNull } = require('graphql');
 const Status = require('../../status');
-const { resolver } = require('graphql-sequelize');
 const deletedType = require('../types/deleted');
 const db = require('../../sequelize/db');
+const Auth = require('../authentication');
 
 const statusMutation = {
     createStatus: {
@@ -15,10 +15,10 @@ const statusMutation = {
                 type: new GraphQLNonNull(statusInput)
             }
         },
-        resolve: (root, {input}, context) => {
+        resolve: Auth.hasRole("admin", (root, {input}, context) => {
             const status = new Status(null, input.status);
             return status.create();
-        }
+        })
     },
     updateStatus: {
         type: statusType,
@@ -28,10 +28,10 @@ const statusMutation = {
                 type: new GraphQLNonNull(statusInput)
             }
         },
-        resolve: (root, {input}, context, info) => {
+        resolve: Auth.hasRole("admin", (root, {input}, context, info) => {
             const status = new Status(input.id, input.status);
             return status.update();
-        }
+        })
     },
     deleteStatus: {
         type: deletedType,
@@ -41,10 +41,10 @@ const statusMutation = {
                 type: new GraphQLNonNull(statusInput)
             }
         },
-        resolve: (root, {input}, context) => {
+        resolve: Auth.hasRole("admin", (root, {input}, context) => {
             const status = new Status(input.id);
             return status.delete();
-        }
+        })
     }
 }
 

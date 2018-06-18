@@ -1,12 +1,12 @@
 const db = require('../../sequelize/db');
 const { resolver, defaultArgs } = require('graphql-sequelize');
 const userType = require('../types/user');
-const authenticate = require('../authentication');
+const Auth = require('../authentication');
 
 module.exports = {
   schema: {
     type: userType,
-    resolve: authenticate(resolver(db.user)),
+    resolve: Auth.hasRole("admin", resolver(db.user)),
     args: defaultArgs(db.user)
   }
 };

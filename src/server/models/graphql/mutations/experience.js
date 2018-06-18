@@ -2,9 +2,9 @@ const experienceType = require('../types/experience');
 const experienceInput = require('../types/inputs/experience');
 const { GraphQLNonNull } = require('graphql');
 const Experience = require('../../experience');
-const { resolver } = require('graphql-sequelize');
 const deletedType = require('../types/deleted');
 const db = require('../../sequelize/db');
+const Auth = require('../authentication');
 
 const experienceMutation = {
     createExperience: {
@@ -15,10 +15,10 @@ const experienceMutation = {
                 type: new GraphQLNonNull(experienceInput)
             }
         },
-        resolve: (root, {input}, context) => {
+        resolve: Auth.hasRole("admin", (root, {input}, context) => {
             const experience = new Experience(null, input.experience);
             return experience.create();
-        }
+        })
     },
     updateExperience: {
         type: experienceType,
@@ -28,10 +28,10 @@ const experienceMutation = {
                 type: new GraphQLNonNull(experienceInput)
             }
         },
-        resolve: (root, {input}, context, info) => {
+        resolve: Auth.hasRole("admin", (root, {input}, context, info) => {
             const experience = new Experience(input.id, input.experience);
             return experience.update();
-        }
+        })
     },
     deleteExperience: {
         type: deletedType,
@@ -41,10 +41,10 @@ const experienceMutation = {
                 type: new GraphQLNonNull(experienceInput)
             }
         },
-        resolve: (root, {input}, context) => {
+        resolve: Auth.hasRole("admin", (root, {input}, context) => {
             const experience = new Experience(input.id);
             return experience.delete();
-        }
+        })
     }
 }
 

@@ -2,9 +2,9 @@ const reactionType = require('../types/reaction');
 const reactionInput = require('../types/inputs/reaction');
 const { GraphQLNonNull } = require('graphql');
 const Reaction = require('../../reaction');
-const { resolver } = require('graphql-sequelize');
 const deletedType = require('../types/deleted');
 const db = require('../../sequelize/db');
+const Auth = require('../authentication');
 
 const reactionMutation = {
     createReaction: {
@@ -15,10 +15,10 @@ const reactionMutation = {
                 type: new GraphQLNonNull(reactionInput)
             }
         },
-        resolve: (root, {input}, context) => {
+        resolve: Auth.hasRole("admin", (root, {input}, context) => {
             const reaction = new Reaction(null, input.reaction);
             return reaction.create();
-        }
+        })
     },
     updateReaction: {
         type: reactionType,
@@ -28,10 +28,10 @@ const reactionMutation = {
                 type: new GraphQLNonNull(reactionInput)
             }
         },
-        resolve: (root, {input}, context, info) => {
+        resolve: Auth.hasRole("admin", (root, {input}, context, info) => {
             const reaction = new Reaction(input.id, input.reaction);
             return reaction.update();
-        }
+        })
     },
     deleteReaction: {
         type: deletedType,
@@ -41,10 +41,10 @@ const reactionMutation = {
                 type: new GraphQLNonNull(reactionInput)
             }
         },
-        resolve: (root, {input}, context) => {
+        resolve: Auth.hasRole("admin", (root, {input}, context) => {
             const reaction = new Reaction(input.id);
             return reaction.delete();
-        }
+        })
     }
 }
 

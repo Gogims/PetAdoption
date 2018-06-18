@@ -2,9 +2,9 @@ const tailType = require('../types/tail');
 const tailInput = require('../types/inputs/tail');
 const { GraphQLNonNull } = require('graphql');
 const Tail = require('../../tail');
-const { resolver } = require('graphql-sequelize');
 const deletedType = require('../types/deleted');
 const db = require('../../sequelize/db');
+const Auth = require('../authentication');
 
 const tailMutation = {
     createTail: {
@@ -15,10 +15,10 @@ const tailMutation = {
                 type: new GraphQLNonNull(tailInput)
             }
         },
-        resolve: (root, {input}, context) => {
+        resolve: Auth.hasRole("admin", (root, {input}, context) => {
             const tail = new Tail(null, input.tail);
             return tail.create();
-        }
+        })
     },
     updateTail: {
         type: tailType,
@@ -28,10 +28,10 @@ const tailMutation = {
                 type: new GraphQLNonNull(tailInput)
             }
         },
-        resolve: (root, {input}, context, info) => {
+        resolve: Auth.hasRole("admin", (root, {input}, context, info) => {
             const tail = new Tail(input.id, input.tail);
             return tail.update();
-        }
+        })
     },
     deleteTail: {
         type: deletedType,
@@ -41,10 +41,10 @@ const tailMutation = {
                 type: new GraphQLNonNull(tailInput)
             }
         },
-        resolve: (root, {input}, context) => {
+        resolve: Auth.hasRole("admin", (root, {input}, context) => {
             const tail = new Tail(input.id);
             return tail.delete();
-        }
+        })
     }
 }
 

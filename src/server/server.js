@@ -33,7 +33,12 @@ server.use('/graphql', graphqlExpress(request => {
 }));
 
 // GraphiQL, a visual editor for queries
-server.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
+if(process.env.NODE_ENV === "development"){
+    server.use('/graphiql', graphiqlExpress({
+        endpointURL: '/graphql',
+        passHeader: `'Authorization': 'Bearer ${jwtConfig.token}'`
+    }));
+}
 
 server.listen(port, () => {
     console.log('Running a GraphQL API server at localhost:' + port + '/graphql');

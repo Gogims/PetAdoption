@@ -2,12 +2,11 @@ const userType = require('../types/user');
 const userInput = require('../types/inputs/user');
 const { GraphQLNonNull, GraphQLString } = require('graphql');
 const User = require('../../user');
-const { resolver } = require('graphql-sequelize');
 const deletedType = require('../types/deleted');
-const db = require('../../sequelize/db');
 const jwtConfig = require('../../../config/jwt');
 const jwt = require('jsonwebtoken');
-const authenticate = require('../authentication');
+const Auth = require('../authentication');
+const LoggedUser = require('../types/loggedUser');
 
 const userMutation = {
     createUser: {
@@ -18,10 +17,10 @@ const userMutation = {
                 type: new GraphQLNonNull(userInput)
             }
         },
-        resolve: authenticate ((root, {input}, context) => {
+        resolve: Auth.hasRole('admin', ((root, {input}, context) => {
             const user = new User(input);
             return user.create();
-        })
+        }))
     },
     updateUser: {
         type: userType,
@@ -31,10 +30,10 @@ const userMutation = {
                 type: new GraphQLNonNull(userInput)
             }
         },
-        resolve: (root, {input}, context, info) => {
+        resolve: Auth.hasRole('admin', ((root, {input}, context, info) => {
             const user = new User(input);
             return user.update();
-        }
+        }))
     },
     deleteUser: {
         type: deletedType,
@@ -44,13 +43,13 @@ const userMutation = {
                 type: new GraphQLNonNull(userInput)
             }
         },
-        resolve: (root, {input}, context) => {
+        resolve: Auth.hasRole('admin', (root, {input}, context) => {
             const user = new User(input);
             return user.delete();
-        }
+        })
     },
     authenticateUser: {
-        type: GraphQLString,
+        type: LoggedUser,
         description: "Verify user is valid",
         args: {
             userName: {
@@ -62,9 +61,13 @@ const userMutation = {
         },
         resolve: (root, {userName, password}, context) => {
             const user = new User({userName, password});
+
             return user.verify().then(dbUser => {
                 const token = jwt.sign(dbUser, jwtConfig.jwtKey);
-                return token;
+                return {
+                    user: dbUser,
+                    token
+                };
             });
         }
     }

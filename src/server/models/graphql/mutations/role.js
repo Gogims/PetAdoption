@@ -2,9 +2,9 @@ const roleType = require('../types/role');
 const roleInput = require('../types/inputs/role');
 const { GraphQLNonNull } = require('graphql');
 const Role = require('../../role');
-const { resolver } = require('graphql-sequelize');
 const deletedType = require('../types/deleted');
 const db = require('../../sequelize/db');
+const Auth = require('../authentication');
 
 const roleMutation = {
     createRole: {
@@ -15,10 +15,10 @@ const roleMutation = {
                 type: new GraphQLNonNull(roleInput)
             }
         },
-        resolve: (root, {input}, context) => {
+        resolve: Auth.hasRole("admin", (root, {input}, context) => {
             const role = new Role(null, input.role);
             return role.create();
-        }
+        })
     },
     updateRole: {
         type: roleType,
@@ -28,10 +28,10 @@ const roleMutation = {
                 type: new GraphQLNonNull(roleInput)
             }
         },
-        resolve: (root, {input}, context, info) => {
+        resolve: Auth.hasRole("admin", (root, {input}, context, info) => {
             const role = new Role(input.id, input.role);
             return role.update();
-        }
+        })
     },
     deleteRole: {
         type: deletedType,
@@ -41,10 +41,10 @@ const roleMutation = {
                 type: new GraphQLNonNull(roleInput)
             }
         },
-        resolve: (root, {input}, context) => {
+        resolve: Auth.hasRole("admin", (root, {input}, context) => {
             const role = new Role(input.id);
             return role.delete();
-        }
+        })
     }
 }
 

@@ -99,8 +99,24 @@ class User {
                         }
                     }
                 ]
+            },
+            include: [db.role]
+        })
+        .then(user => {
+            if(!user) {
+                throw new Error("Invalid credentials");
             }
-        }).then(user => !user ? null : user.dataValues);
+            const userData = Object.assign({}, user.dataValues);
+
+            if(!!user.roles) {
+                userData.roles = user.roles.map(role => {
+                    delete role.dataValues.userRole;
+                    return role.dataValues;
+                });
+            }
+
+            return userData;
+        });
     }
 }
 

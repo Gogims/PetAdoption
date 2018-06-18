@@ -2,9 +2,9 @@ const speciaType = require('../types/specie');
 const specieInput = require('../types/inputs/specie');
 const { GraphQLNonNull } = require('graphql');
 const Specie = require('../../specie');
-const { resolver } = require('graphql-sequelize');
 const deletedType = require('../types/deleted');
 const db = require('../../sequelize/db');
+const Auth = require('../authentication');
 
 const specieMutation = {
     createSpecie: {
@@ -15,10 +15,10 @@ const specieMutation = {
                 type: new GraphQLNonNull(specieInput)
             }
         },
-        resolve: (root, {input}, context) => {
+        resolve: Auth.hasRole("admin", (root, {input}, context) => {
             const specie = new Specie(null, input.specie);
             return specie.create();
-        }
+        })
     },
     updateSpecie: {
         type: speciaType,
@@ -28,10 +28,10 @@ const specieMutation = {
                 type: new GraphQLNonNull(specieInput)
             }
         },
-        resolve: (root, {input}, context, info) => {
+        resolve: Auth.hasRole("admin", (root, {input}, context, info) => {
             const specie = new Specie(input.id, input.specie);
             return specie.update();
-        }
+        })
     },
     deleteSpecie: {
         type: deletedType,
@@ -41,10 +41,10 @@ const specieMutation = {
                 type: new GraphQLNonNull(specieInput)
             }
         },
-        resolve: (root, {input}, context) => {
+        resolve: Auth.hasRole("admin", (root, {input}, context) => {
             const specie = new Specie(input.id);
             return specie.delete();
-        }
+        })
     }
 }
 

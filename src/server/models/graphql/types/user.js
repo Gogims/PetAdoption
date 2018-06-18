@@ -13,6 +13,7 @@ module.exports = new GraphQLObjectType({
         type: new GraphQLList(roleType),
         resolve: (user, args, context, info) => {
           if (!user.roles) {
+            //Sequelize method
             return user.getRoles();
           }
 

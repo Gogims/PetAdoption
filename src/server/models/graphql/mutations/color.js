@@ -2,9 +2,9 @@ const colorType = require('../types/color');
 const colorInput = require('../types/inputs/color');
 const { GraphQLNonNull } = require('graphql');
 const Color = require('../../color');
-const { resolver } = require('graphql-sequelize');
 const deletedType = require('../types/deleted');
 const db = require('../../sequelize/db');
+const Auth = require('../authentication');
 
 const colorMutation = {
     createColor: {
@@ -15,10 +15,10 @@ const colorMutation = {
                 type: new GraphQLNonNull(colorInput)
             }
         },
-        resolve: (root, {input}, context) => {
+        resolve: Auth.hasRole("admin", (root, {input}, context) => {
             const color = new Color(null, input.color);
             return color.create();
-        }
+        })
     },
     updateColor: {
         type: colorType,
@@ -28,10 +28,10 @@ const colorMutation = {
                 type: new GraphQLNonNull(colorInput)
             }
         },
-        resolve: (root, {input}, context, info) => {
+        resolve: Auth.hasRole("admin", (root, {input}, context, info) => {
             const color = new Color(input.id, input.color);
             return color.update();
-        }
+        })
     },
     deleteColor: {
         type: deletedType,
@@ -41,10 +41,10 @@ const colorMutation = {
                 type: new GraphQLNonNull(colorInput)
             }
         },
-        resolve: (root, {input}, context) => {
+        resolve: Auth.hasRole("admin", (root, {input}, context) => {
             const color = new Color(input.id);
             return color.delete();
-        }
+        })
     }
 }
 

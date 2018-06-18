@@ -2,9 +2,9 @@ const frequencyType = require('../types/frequency');
 const frequencyInput = require('../types/inputs/frequency');
 const { GraphQLNonNull } = require('graphql');
 const Frequency = require('../../frequency');
-const { resolver } = require('graphql-sequelize');
 const deletedType = require('../types/deleted');
 const db = require('../../sequelize/db');
+const Auth = require('../authentication');
 
 const frequencyMutation = {
     createFrequency: {
@@ -15,10 +15,10 @@ const frequencyMutation = {
                 type: new GraphQLNonNull(frequencyInput)
             }
         },
-        resolve: (root, {input}, context) => {
+        resolve: Auth.hasRole("admin", (root, {input}, context) => {
             const frequency = new Frequency(null, input.frequency);
             return frequency.create();
-        }
+        })
     },
     updateFrequency: {
         type: frequencyType,
@@ -28,10 +28,10 @@ const frequencyMutation = {
                 type: new GraphQLNonNull(frequencyInput)
             }
         },
-        resolve: (root, {input}, context, info) => {
+        resolve: Auth.hasRole("admin", (root, {input}, context, info) => {
             const frequency = new Frequency(input.id, input.frequency);
             return frequency.update();
-        }
+        })
     },
     deleteFrequency: {
         type: deletedType,
@@ -41,10 +41,10 @@ const frequencyMutation = {
                 type: new GraphQLNonNull(frequencyInput)
             }
         },
-        resolve: (root, {input}, context) => {
+        resolve: Auth.hasRole("admin", (root, {input}, context) => {
             const frequency = new Frequency(input.id);
             return frequency.delete();
-        }
+        })
     }
 }
 
